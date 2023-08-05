@@ -99,11 +99,11 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
         }).catch(err => {
           console.log(err);
         })
-        return showModal('success', 'All Good!', 'Your email has been verified.', 'Proceed');
+        return showModal('success', 'Tout est beau.', 'Votre connection est autoriser.', 'Continuer');
       }
     }).catch(err => {
       setVerifying(false);
-      return showModal('failed', 'Uh oh...', err.message, 'OK');
+      return showModal('failed', 'oupsi', err.message, 'OK');
     });
   }
 
@@ -124,8 +124,12 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
         <IconHeader 
           name="lock"
         />
-        <RegularText textStyle={{marginTop: 20, textAlign: 'center'}}>An email with a 4-digit code was sent to :</RegularText>
-        <RegularText textStyle={{marginBottom: 25, marginTop: 2, textAlign: 'center', fontWeight: 'bold'}}>{email}</RegularText>
+        <RegularText textStyle={{marginTop: 20, textAlign: 'center'}}>
+          Un email avec un code de connection a été envoyé à :
+        </RegularText>
+        <RegularText textStyle={{marginBottom: 25, marginTop: 2, textAlign: 'center', fontWeight: 'bold'}}>
+          {email}
+        </RegularText>
 
         <StyledCodeInput 
           maxLength={MAX_CONST_LENGTH}
@@ -137,20 +141,20 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
         {verifying && <RegularButton>
           <ActivityIndicator
             size="small"
-            color={colors.primary}
+            color={colors.darkGreen}
           />
         </RegularButton>}
         {!verifying && pinReady && <RegularButton
           onPress={handleEmailVerification}
         >
-          Verify
+          Vérifier
         </RegularButton>}
         {!verifying && !pinReady && <RegularButton
           disabled={true} 
-          style={{backgroundColor: colors.secondary}}
-          textStyle={{color: colors.lightGray}}
+          style={{backgroundColor: colors.white}}
+          textStyle={{color: colors.darkGreen}}
         >
-          Verify
+          Vérifier
         </RegularButton>}
         <ResendEmailTimer
           activeResend={activeResend}

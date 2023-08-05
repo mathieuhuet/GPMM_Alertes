@@ -38,7 +38,7 @@ const CodeInputText = styled.Text`
   font-size: 30px;
   font-weight: bold;
   text-align: center;
-  color: ${colors.lightGreen};
+  color: ${colors.darkGreen};
 `;
 
 const CodeInputFocused = styled(CodeInput)`

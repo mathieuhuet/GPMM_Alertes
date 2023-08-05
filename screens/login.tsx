@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import { loginEmail } from '../services/userServices/login';
+import styled from 'styled-components/native';
 // Custom components
 import MainContainer from '../components/containers/mainContainer';
 import KeyboardAvoidingContainer from '../components/containers/keyboardAvoidingContainer';
@@ -13,6 +14,13 @@ import MessageBox from '../components/texts/messageBox';
 import RegularButton from '../components/buttons/regularButton';
 import PressableText from '../components/texts/pressableText';
 import { colors } from '../components/colors';
+import GPMM_Logo from '../assets/GPMM_logo.webp';
+import { ScreenHeight } from '../components/shared';
+
+const Image = styled.Image`
+  width: 80%;
+  height: ${ScreenHeight * 0.2}px;
+`;
 
 
 const Login: FunctionComponent = ({ navigation }) => {
@@ -37,10 +45,15 @@ const Login: FunctionComponent = ({ navigation }) => {
   }
 
   return (
-    <MainContainer>
+    <MainContainer
+      style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}
+    >
       <KeyboardAvoidingContainer>
         <View>
-          
+          <Image
+            source={GPMM_Logo}
+            resizeMode='contain'
+          />
         </View>
         <View>
           <RegularText textStyle={{marginBottom: 25}}>
