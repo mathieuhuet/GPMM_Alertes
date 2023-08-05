@@ -43,12 +43,14 @@ const Login: FunctionComponent = ({ navigation }) => {
           
         </View>
         <View>
-          <RegularText textStyle={{marginBottom: 25}}>Login with your email address.</RegularText>
+          <RegularText textStyle={{marginBottom: 25}}>
+            Connectez-vous avec votre courriel GPMM
+          </RegularText>
           <Formik
             initialValues={{email: ""}}
             onSubmit={(values, {setSubmitting}) => {
               if (values.email === "") {
-                setMessage('Please enter your email address.');
+                setMessage('Veuillez entrer votre adresse courriel.');
                 setSubmitting(false);
               } else {
                 handleLogin({email: values.email.toLowerCase()}, setSubmitting);
@@ -58,10 +60,10 @@ const Login: FunctionComponent = ({ navigation }) => {
             {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
               <>
                 <StyledTextInput
-                  label="Email Address"
+                  label="Adresse Courriel"
                   icon="email-variant"
                   keyboardType="email-address"
-                  placeholder="Your email"
+                  placeholder="xyz@gpmmom.ca"
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   value={values.email}
@@ -81,7 +83,7 @@ const Login: FunctionComponent = ({ navigation }) => {
                 {!isSubmitting && <RegularButton
                   onPress={handleSubmit}
                 >
-                  Login
+                  Connection
                 </RegularButton>}
               </>
             )}
