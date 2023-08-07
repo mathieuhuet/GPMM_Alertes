@@ -79,7 +79,7 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
     verifyUser({loginCode: code, email: email}).then(result => {
       setVerifying(false);
       if (result.data) {
-        saveAccessToken(result.data.accessToken).then((accessToken) => {
+        saveAccessToken(result.data.token).then((accessToken) => {
           if (accessToken) {
             getUserInfo(accessToken).then((result) => {
               dispatch({ type: 'SET_CREDENTIALS', 
@@ -89,8 +89,7 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
                 email: result.data.email,
                 profileIconColor: result.data.profileIconColor, 
                 profileIconBackgroundColor: result.data.profileIconBackgroundColor, 
-                profileIconPolice: result.data.profileIconPolice,
-                _id: result.data._id
+                profileIconPolice: result.data.profileIconPolice
               }});
             }).catch((err) => {
               console.log(err, 'EMAIL 2');
@@ -151,7 +150,7 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
         </RegularButton>}
         {!verifying && !pinReady && <RegularButton
           disabled={true} 
-          style={{backgroundColor: colors.white}}
+          style={{backgroundColor: colors.lightGray}}
           textStyle={{color: colors.darkGreen}}
         >
           Vérifier

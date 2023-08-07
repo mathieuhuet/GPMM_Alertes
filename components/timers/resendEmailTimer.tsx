@@ -47,13 +47,13 @@ const ResendEmailTimer: FunctionComponent<Props> = (props) => {
       <PressableText
         onPress={() => props.resendEmail(triggerTimer(props.targetTime))}
         disabled={!props.activeResend}
-        textStyle={{opacity: !props.activeResend ? 0.6 : 1, color: colors.lightGreen, fontWeight: 'bold', padding: 5}}
+        textStyle={{opacity: !props.activeResend ? 0.6 : 1, fontWeight: 'bold', padding: 5, color: colors.darkGreen, marginTop: -10}}
       >
         Cliquer ici pour envoyer un nouveau code
       </PressableText>
       {timeLeft === 30000 || timeLeft === 0 ? <></> : 
         <SmallText textStyle={{fontWeight: 'bold', color:colors.failure, textAlign: 'center'}}>
-          You can request a new code in {Math.round(timeLeft / 1000)} second(s).
+          Vous pouvez demander un nouveau code dans {Math.round(timeLeft / 1000)} seconde(s).
         </SmallText>
       }
     </StyledView>

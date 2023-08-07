@@ -1,14 +1,42 @@
-import * as React from "react"
+import React, { FunctionComponent } from 'react';
 import Svg, { Circle, Rect, Text, TSpan } from "react-native-svg"
 /* SVGR has dropped some elements not supported by react-native-svg: style */
-const REM_Network = (props) => (
+
+interface Props {
+  RIVNumber?: any;
+  RIVColor?: any;
+  RIVOnPress?: any;
+  DUQNumber?: any;
+  DUQColor?: any;
+  DUQOnPress?: any;
+  PANNumber?: any;
+  PANColor?: any;
+  PANOnPress?: any;
+  IDSNumber?: any;
+  IDSColor?: any;
+  IDSOnPress?: any;
+  GCTNumber?: any;
+  GCTColor?: any;
+  GCTOnPress?: any;
+  MSFNumber?: any;
+  MSFColor?: any;
+  MSFOnPress?: any;
+  PCCNumber?: any;
+  PCCColor?: any;
+  PCCOnPress?: any;
+  PCCRNumber?: any;
+  PCCRColor?: any;
+  PCCROnPress?: any;
+}
+
+const REM_Network: FunctionComponent<Props> = (props) => {
+  return (  
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     id="enoQ81Dji3M1"
     shapeRendering="geometricPrecision"
     textRendering="geometricPrecision"
     viewBox="0 0 700 600"
-    {...props}
   >
     <Circle
       r={35}
@@ -223,6 +251,6 @@ const REM_Network = (props) => (
       <TSpan y={0} />
       PCCR
     </Text>
-  </Svg>
-)
+  </Svg>)
+}
 export default REM_Network

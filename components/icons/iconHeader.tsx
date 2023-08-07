@@ -29,7 +29,7 @@ const IconHeader: FunctionComponent<Props> = (props) => {
       <MaterialCommunityIcons 
         name={props.name}
         size={ScreenHeight * 0.08}
-        color={props.color ? props.color : colors.lightGreen}
+        color={props.color ? props.color : colors.lightGray}
       />
     </IconBackground>
   );

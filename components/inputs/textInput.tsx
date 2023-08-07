@@ -4,6 +4,7 @@ import { StyleProp, TextStyle, View, ViewStyle } from "react-native";
 // Styled components
 import styled from 'styled-components/native';
 import { colors } from '../colors';
+import SmallText from '../texts/smallText';
 
 
 
@@ -27,9 +28,11 @@ const InputField = styled.TextInput`
 
 
 interface Props {
+  label?: string;
+  labelStyle?: StyleProp<TextStyle>;
   multiline?: boolean;
   keyboardType?: any;
-  inputFieldStyle?: StyleProp<View>;
+  inputFieldStyle?: StyleProp<ViewStyle>;
   placeholder?: string;
   onChangeText?: any;
   onBlur?: any;
@@ -40,26 +43,34 @@ interface Props {
 
 const TextInput: FunctionComponent<Props> = (props) => {
   const [inputBackgroundColor, setInputBackgroundColor] = useState(colors.white);
+  const [iconAndBorderColor, setIconAndBorderColor] = useState(colors.lightGreen);
 
   const customOnBlur = () => {
     props?.onBlur;
     setInputBackgroundColor(colors.white);
+    setIconAndBorderColor(colors.lightGreen);
   }
 
   const customOnFocus = () => {
     props?.onFocus;
-    setInputBackgroundColor(colors.darkGreen);
+    setInputBackgroundColor(colors.white);
+    setIconAndBorderColor(colors.darkGreen);
   }
 
   return (
     <View
       style={[{width: '100%'}, props.style]}
     >
+      <SmallText
+        textStyle={[props.labelStyle, {color: iconAndBorderColor}]}
+      >
+        {props.label}
+      </SmallText>
       <InputField
         keyboardType={props.keyboardType}
         placeholder={props.placeholder}
         placeholderTextColor={colors.lightGray}
-        style={[{backgroundColor: inputBackgroundColor}, props.inputFieldStyle]}
+        style={[{backgroundColor: inputBackgroundColor, borderColor: iconAndBorderColor, color: colors.darkGreen}, props.inputFieldStyle]}
         onBlur={customOnBlur}
         onFocus={customOnFocus}
         onChangeText={props.onChangeText}

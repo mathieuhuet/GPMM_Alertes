@@ -16,15 +16,11 @@ const KeyboardAvoidingContainer: FunctionComponent<Props> = (props) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={0}
     >
-      <ScrollView
-        showsVerticalScrollIndicator={false}
+      <Pressable
+        onPress={Keyboard.dismiss}
       >
-        <Pressable
-          onPress={Keyboard.dismiss}
-        >
-          {props.children}
-        </Pressable>
-      </ScrollView>
+        {props.children}
+      </Pressable>
     </KeyboardAvoidingView>
   );
 }

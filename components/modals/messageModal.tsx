@@ -18,7 +18,7 @@ const ModalPressableContainer = styled.Pressable`
 `;
 
 const ModalView = styled.View`
-  background-color: ${colors.lightGray};
+  background-color: ${colors.neonGreen};
   border-radius: 20px;
   width: 100%;
   padding: 35px;
@@ -51,15 +51,15 @@ const MessageModal: FunctionComponent<Props> = (props) => {
           <MaterialCommunityIcons 
             name={props.type === 'success' ? 'check-circle' : 'close-circle'} 
             size={100}
-            color={props.type === 'success' ? colors.success : colors.failure}  
+            color={props.type === 'success' ? colors.darkGreen : colors.failure}  
           />
           <LargeText
-            textStyle={{fontSize: 25, color: colors.lightGreen, marginVertical: 10}}
+            textStyle={{fontSize: 25, color: colors.darkGreen, marginVertical: 10}}
           >
             {props.headerText}
           </LargeText>
           <RegularText
-            textStyle={{marginBottom: 20, textAlign: 'center'}}
+            textStyle={{marginBottom: 20, textAlign: 'center', color: colors.darkGreen}}
           >
             {props.message}
           </RegularText>

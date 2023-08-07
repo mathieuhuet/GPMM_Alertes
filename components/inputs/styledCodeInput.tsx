@@ -8,7 +8,7 @@ const CodeInputSection = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  margin-vertical: 35px;
+  margin-vertical: 70px;
 `;
 
 const HiddenTextInput = styled.TextInput`
@@ -43,7 +43,6 @@ const CodeInputText = styled.Text`
 
 const CodeInputFocused = styled(CodeInput)`
   border-color: ${colors.darkGreen};
-
 `;
 
 interface Props {

@@ -4,10 +4,12 @@ export const profileColors = {
   gray: "#969bad",
   sand: "#fde6bb",
   yellow: "#fbcd77",
-  lightGreen: "#9ed885",
+  lightGreen: "#82bf00",
+  darkGreen: "#004638",
+  neonGreen: '#d8f537',
   purple: "#a377fb",
   orange: "#ef835d",
-  white: '#ffffff'
+  white: '#f6f6f6'
 }
 
 export const getProfileColorCode = (color: string): string => {
@@ -28,7 +30,13 @@ export const getProfileColorCode = (color: string): string => {
       return "#fbcd77"
     }
     case 'lightGreen' : {
-      return "#9ed885"
+      return "#82bf00"
+    }
+    case 'darkGreen' : {
+      return "#004638"
+    }
+    case 'neonGreen' : {
+      return "#d8f537"
     }
     case 'purple' : {
       return "#a377fb"
@@ -37,7 +45,7 @@ export const getProfileColorCode = (color: string): string => {
       return "#ef835d"
     }
     case 'white' : {
-      return "#ffffff"
+      return "#f6f6f6"
     }
     default : {
       return "#fde6bb"

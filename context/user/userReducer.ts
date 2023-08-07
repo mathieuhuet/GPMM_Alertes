@@ -44,7 +44,6 @@ export const userReducer = (user, action) => {
         profileIconColor: action.payload.profileIconColor,
         profileIconBackgroundColor: action.payload.profileIconBackgroundColor,
         email: action.payload.email,
-        _id: action.payload._id
       }
     }
     default: {

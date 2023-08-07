@@ -32,8 +32,8 @@ const App: FunctionComponent = () => {
     }).catch(err => {
       console.log(err, 'APP 1');
     }).finally(() => {
-      if (user.accessToken) {
-        getUserInfo(user.accessToken).then((result) => {
+      if (accessToken) {
+        getUserInfo(accessToken).then((result) => {
           dispatch({ type: 'SET_CREDENTIALS', 
           payload: {
             firstName: result.data.firstName, 
@@ -41,7 +41,6 @@ const App: FunctionComponent = () => {
             email: result.data.email,
             profileIconColor: result.data.profileIconColor, 
             profileIconBackgroundColor: result.data.profileIconBackgroundColor, 
-            _id: result.data._id
           }});
         }).catch((err) => {
           console.log(err, 'APP 2');

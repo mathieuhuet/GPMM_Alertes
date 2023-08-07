@@ -60,46 +60,53 @@ interface Props {
 
 const StyledTextInput: FunctionComponent<Props> = (props) => {
   const [inputBackgroundColor, setInputBackgroundColor] = useState(colors.white);
+  const [iconAndBorderColor, setIconAndBorderColor] = useState(colors.lightGreen);
   const [hidePassword, setHidePassword] = useState(true);
 
   const customOnBlur = () => {
     props?.onBlur;
     setInputBackgroundColor(colors.white);
+    setIconAndBorderColor(colors.lightGreen);
   }
 
   const customOnFocus = () => {
     props?.onFocus;
-    setInputBackgroundColor(colors.darkGreen);
+    setInputBackgroundColor(colors.white);
+    setIconAndBorderColor(colors.darkGreen);
   }
 
   return (
     <View
       style={props.style}
     >
-      <LeftIcon>
+      <LeftIcon
+        style={{borderColor: iconAndBorderColor}}
+      >
         <MaterialCommunityIcons 
           name={props.icon ? props.icon : "doubleright"} 
           size={30} 
-          color={props.iconColor ? props.iconColor : colors.lightGreen} 
+          color={props.iconColor ? props.iconColor : iconAndBorderColor} 
         />
       </LeftIcon>
       <SmallText
-        textStyle={props.labelStyle}
+        textStyle={[props.labelStyle, {color: iconAndBorderColor}]}
       >
         {props.label}
       </SmallText>
-      <InputField
-        keyboardType={props.keyboardType}
-        placeholder={props.placeholder}
-        placeholderTextColor={colors.lightGray}
-        style={[{backgroundColor: inputBackgroundColor}, props.inputFieldStyle]}
-        onBlur={customOnBlur}
-        onFocus={customOnFocus}
-        secureTextEntry={props.isPassword && hidePassword}
-        onChangeText={props.onChangeText}
-        spellCheck={false}
-      />
-      {props.isPassword && <RightIcon onPress={() => {
+      {props.isPassword ?
+      <>
+        <InputField
+          keyboardType={props.keyboardType}
+          placeholder={props.placeholder}
+          placeholderTextColor={colors.lightGray}
+          style={[{backgroundColor: inputBackgroundColor, borderColor: iconAndBorderColor, color: colors.darkGreen}, props.inputFieldStyle]}
+          onBlur={customOnBlur}
+          onFocus={customOnFocus}
+          secureTextEntry={props.isPassword && hidePassword}
+          onChangeText={props.onChangeText}
+          spellCheck={false}
+        />
+      <RightIcon onPress={() => {
         setHidePassword(!hidePassword);
       }}>
         <MaterialCommunityIcons 
@@ -107,7 +114,21 @@ const StyledTextInput: FunctionComponent<Props> = (props) => {
           size={30}
           color={colors.lightGreen}
         />
-      </RightIcon>}
+      </RightIcon>
+      </>
+      :
+      <InputField
+        keyboardType={props.keyboardType}
+        placeholder={props.placeholder}
+        placeholderTextColor={colors.lightGray}
+        style={[{backgroundColor: inputBackgroundColor, borderColor: iconAndBorderColor, color: colors.darkGreen, paddingRight: 5}, props.inputFieldStyle]}
+        onBlur={customOnBlur}
+        onFocus={customOnFocus}
+        secureTextEntry={props.isPassword && hidePassword}
+        onChangeText={props.onChangeText}
+        spellCheck={false}
+      />
+      }
     </View>
   );
 }

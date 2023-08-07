@@ -4,8 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Screens
 import Dashboard from '../screens/dashboard';
 import More from '../screens/more/more';
-import ChangeName from '../screens/more/changeName';
-import DeleteAccount from '../screens/more/deleteAccount';
+import ChangeIcon from '../screens/more/changeIcon';
+import Create from '../screens/create';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,12 +27,12 @@ const ConnectedStack: FunctionComponent = (props) => {
           component={More}
         />
         <Stack.Screen
-          name='ChangeName'
-          component={ChangeName}
+          name='ChangeIcon'
+          component={ChangeIcon}
         />
         <Stack.Screen
-          name='DeleteAccount'
-          component={DeleteAccount}
+          name='Create'
+          component={Create}
         />
       </Stack.Navigator>
     </NavigationContainer>

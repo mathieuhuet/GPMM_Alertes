@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { FRIENDLYBETS_USER_API } from '../../secret';
-const API = FRIENDLYBETS_USER_API
-? FRIENDLYBETS_USER_API
+import { GPMM_USER_API } from '../../secret';
+const API = GPMM_USER_API
+? GPMM_USER_API
 : 'http://192.168.1.5:10101/user';
 
 export const loginEmail = (credentials) => {

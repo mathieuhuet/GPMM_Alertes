@@ -15,6 +15,11 @@ const ButtonView = styled.TouchableOpacity`
   align-self: center;
   width: ${ScreenHeight * 0.1}px;
   height: ${ScreenHeight * 0.1}px;
+  shadow-color: #000000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 4px;
+  elevation: 5;
 `;
 
 interface Props {
@@ -44,7 +49,10 @@ const IconButton: FunctionComponent<Props> = (props) => {
         />}
       </ButtonView>}
       {!props.disabled && 
-      <ButtonView style={[props.style, {height: buttonSize, width: buttonSize}]} onPress={props.onPress}>
+      <ButtonView 
+        style={[props.style, {height: buttonSize, width: buttonSize}]} 
+        onPress={props.onPress}
+      >
         {props.children ? props.children : 
         <MaterialCommunityIcons 
           name={props.name}
