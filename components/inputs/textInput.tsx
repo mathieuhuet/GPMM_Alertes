@@ -19,11 +19,6 @@ const InputField = styled.TextInput`
   color: ${colors.lightGreen};
   border-color: ${colors.lightGreen};
   border-width: 2px;
-  shadow-color: #000000;
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.25;
-  shadow-radius: 4px;
-  elevation: 5;
 `;
 
 

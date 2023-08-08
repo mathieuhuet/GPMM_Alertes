@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react';
-import { Modal } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { FunctionComponent, useState } from 'react';
+import { Modal, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 // Styled components
 import styled from 'styled-components/native';
 import { colors } from '../colors';
@@ -32,14 +32,22 @@ const ModalView = styled.View`
 
 interface Props {
   buttonHandler: any;
-  type: string;
   headerText: string;
-  message: string;
   buttonText: string;
   modalVisible: boolean;
 }
 
-const MessageModal: FunctionComponent<Props> = (props) => {
+const SelectTimeModal: FunctionComponent<Props> = (props) => {
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    if (Platform.OS === 'android') {
+      setShow(false);
+    }
+    setDate(selectedDate);
+  };
+
   return (
     <Modal
       animationType='slide'
@@ -48,21 +56,21 @@ const MessageModal: FunctionComponent<Props> = (props) => {
     >
       <ModalPressableContainer>
         <ModalView>
-          <MaterialCommunityIcons 
-            name={props.type === 'success' ? 'check-circle' : 'close-circle'} 
-            size={100}
-            color={props.type === 'success' ? colors.darkGreen : colors.failure}  
-          />
           <LargeText
             textStyle={{fontSize: 25, color: colors.darkGreen, marginVertical: 10}}
           >
             {props.headerText}
           </LargeText>
-          <RegularText
-            textStyle={{marginBottom: 20, textAlign: 'center', color: colors.darkGreen}}
-          >
-            {props.message}
-          </RegularText>
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={'time'}
+            display='spinner'
+            is24Hour={true}
+            onChange={onChange}
+            style={{alignSelf: 'center', width: '80%'}}
+            minimumDate={new Date()}
+          />
           <RegularButton
             onPress={props.buttonHandler}
           >
@@ -74,4 +82,4 @@ const MessageModal: FunctionComponent<Props> = (props) => {
   );
 }
 
-export default MessageModal;
+export default SelectTimeModal;

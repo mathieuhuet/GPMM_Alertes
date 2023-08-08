@@ -15,16 +15,28 @@ import PressableText from '../components/texts/pressableText';
 import { colors } from '../components/colors';
 import { ScreenHeight } from '../components/shared';
 import SmallText from '../components/texts/smallText';
+import SelectDateModal from '../components/modals/selectDateModal';
+import SelectTimeModal from '../components/modals/selectTimeModal';
 
 
 
 const Create: FunctionComponent = ({ navigation }) => {
   const [message, setMessage] = useState('');
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
+  const [showDateModal, setShowDateModal] = useState(false);
+  const [showTimeModal, setShowTimeModal] = useState(false);
+  const [openDep, setOpenDep] = useState(false);
+  const [valueDep, setValueDep] = useState(null);
+  const [itemsDep, setItemsDep] = useState([
     {label: 'Sig&Com', value: 'sig'},
     {label: 'Bâtiments', value: 'bat'},
+  ]);
+  const [openLvl, setOpenLvl] = useState(false);
+  const [valueLvl, setValueLvl] = useState(null);
+  const [itemsLvl, setItemsLvl] = useState([
+    {label: '‼️ Urgent', value: 'urgent'},
+    {label: '⚠️ Important', value: 'important'},
+    {label: '🛂 Mineur', value: 'mineur'},
+    {label: '✅ Routine', value: 'routine'},
   ]);
 
   const handleCreate = (credentials, setSubmitting) => {
@@ -77,49 +89,86 @@ const Create: FunctionComponent = ({ navigation }) => {
                   style={{ marginBottom: 20 }}
                   inputFieldStyle={{ height: ScreenHeight / 8 }}
                 />
-                
-                <RegularText>
-                  Quel département?
-                </RegularText>
+                <SmallText>
+                  Importance de l'activité?
+                </SmallText>
                 <View
                   style={{zIndex: 10}}
                 >
                   <DropDownPicker
                     placeholder=''
-                    open={open}
-                    value={value}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    setItems={setItems}
-                    maxHeight={400}
-                    dropDownContainerStyle={{
-                      backgroundColor: colors.white,
-                      borderColor: colors.darkGreen
-                    }}
+                    open={openLvl}
+                    value={valueLvl}
+                    items={itemsLvl}
+                    setOpen={setOpenLvl}
+                    setValue={setValueLvl}
+                    setItems={setItemsLvl}
+                    listMode='MODAL'
+                    modalTitle='Choisissez le département concerné.'
+                    modalContentContainerStyle={{ backgroundColor: colors.whiteGreen }}
+                    modalAnimationType='slide'
                     style={{
                       backgroundColor: colors.white,
-                      borderColor: colors.lightGreen
+                      borderColor: colors.lightGreen,
+                      borderWidth: 2
                     }}
                     textStyle={{
                       color: colors.darkGreen,
                       fontSize: 18
                     }}
-                    listParentLabelStyle={{
-                      fontWeight: "bold"
-                    }}
-                    listChildContainerStyle={{
-                      paddingLeft: 20
-                    }}
-                    listItemContainerStyle={{
-                      height: 40
-                    }}
-                    theme="DARK"
-                    multiple={false}
-                    mode="BADGE"
-                    itemSeparator={true}
                   />
                 </View>
+                <SmallText>
+                  Département concerné?
+                </SmallText>
+                <View
+                  style={{zIndex: 10}}
+                >
+                  <DropDownPicker
+                    placeholder=''
+                    open={openDep}
+                    value={valueDep}
+                    items={itemsDep}
+                    setOpen={setOpenDep}
+                    setValue={setValueDep}
+                    setItems={setItemsDep}
+                    listMode='MODAL'
+                    modalTitle='Choisissez le département concerné.'
+                    modalContentContainerStyle={{ backgroundColor: colors.whiteGreen }}
+                    modalAnimationType='slide'
+                    style={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.lightGreen,
+                      borderWidth: 2
+                    }}
+                    textStyle={{
+                      color: colors.darkGreen,
+                      fontSize: 18
+                    }}
+                  />
+                </View>
+                <RegularButton
+                  onPress={() => setShowDateModal(true)}
+                >
+                  show DATE modal
+                </RegularButton>
+                <SelectDateModal
+                  buttonHandler={() => setShowDateModal(false)}
+                  headerText='test'
+                  modalVisible={showDateModal}
+                  buttonText='close'
+                />
+                <RegularButton
+                  onPress={() => setShowTimeModal(true)}
+                >
+                  show TIME modal
+                </RegularButton>
+                <SelectTimeModal
+                  buttonHandler={() => setShowTimeModal(false)}
+                  headerText='test'
+                  modalVisible={showTimeModal}
+                  buttonText='close'
+                />
                 <MessageBox
                   textStyle={{ marginBottom: 20 }}
                 >
