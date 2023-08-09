@@ -17,6 +17,17 @@ const ModalPressableContainer = styled.Pressable`
   align-items: center;
 `;
 
+const ModalViewIOS = styled.View`
+  background-color: ${colors.whiteGreen};
+  border-radius: 20px;
+  width: 100%;
+  align-items: center;
+  shadow-color: #000000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 4px;
+`;
+
 const ModalView = styled.View`
   background-color: ${colors.whiteGreen};
   border-radius: 20px;
@@ -24,46 +35,67 @@ const ModalView = styled.View`
   padding: 35px;
   align-items: center;
   elevation: 5;
-  shadow-color: #000000;
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.25;
-  shadow-radius: 4px;
 `;
 
 interface Props {
   buttonHandler: any;
-  headerText: string;
   buttonText: string;
   modalVisible: boolean;
+  time: any;
+  setTime: any;
 }
 
 const SelectTimeModal: FunctionComponent<Props> = (props) => {
-  const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
+  if (Platform.OS === 'ios') {
 
-  const onChange = (event, selectedDate) => {
-    if (Platform.OS === 'android') {
-      setShow(false);
-    }
-    setDate(selectedDate);
-  };
+    const onChange = (event, selectedDate) => {
+      props.setTime(selectedDate);
+    };
+  
+    return (
+      <Modal
+        animationType='slide'
+        visible={props.modalVisible}
+        transparent={true}
+      >
+        <ModalPressableContainer>
+          <ModalViewIOS>
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={props.time}
+              mode={'time'}
+              display='spinner'
+              is24Hour={true}
+              onChange={onChange}
+              style={{alignSelf: 'center', width: '80%'}}
+              minimumDate={new Date()}
+            />
+            <RegularButton
+              onPress={props.buttonHandler}
+            >
+              {props.buttonText || 'OK'}
+            </RegularButton>
+          </ModalViewIOS>
+        </ModalPressableContainer>
+      </Modal>
+    );
+  } else {
 
-  return (
-    <Modal
-      animationType='slide'
-      visible={props.modalVisible}
-      transparent={true}
-    >
-      <ModalPressableContainer>
-        <ModalView>
-          <LargeText
-            textStyle={{fontSize: 25, color: colors.darkGreen, marginVertical: 10}}
-          >
-            {props.headerText}
-          </LargeText>
+    const onChange = (event, selectedDate) => {
+      props.setTime(selectedDate);
+      props.buttonHandler();
+    };
+  
+    return (
+      <Modal
+        animationType='slide'
+        visible={props.modalVisible}
+        transparent={true}
+      >
+        <ModalPressableContainer>
           <DateTimePicker
             testID="dateTimePicker"
-            value={date}
+            value={props.time}
             mode={'time'}
             display='spinner'
             is24Hour={true}
@@ -71,15 +103,10 @@ const SelectTimeModal: FunctionComponent<Props> = (props) => {
             style={{alignSelf: 'center', width: '80%'}}
             minimumDate={new Date()}
           />
-          <RegularButton
-            onPress={props.buttonHandler}
-          >
-            {props.buttonText || 'OK'}
-          </RegularButton>
-        </ModalView>
-      </ModalPressableContainer>
-    </Modal>
-  );
+        </ModalPressableContainer>
+      </Modal>
+    );
+  }
 }
 
 export default SelectTimeModal;

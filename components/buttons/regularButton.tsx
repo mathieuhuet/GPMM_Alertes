@@ -47,7 +47,7 @@ const RegularButton: FunctionComponent<Props> = (props) => {
       {props.disabled &&       
       <ButtonViewDisabled style={props.style}>
         <RegularText
-          textStyle={[{color: colors.darkGreen}, props.textStyle]}
+          textStyle={[{color: colors.darkGreen, fontSize: 20}, props.textStyle]}
         >
           {props.children}
         </RegularText>
@@ -55,7 +55,7 @@ const RegularButton: FunctionComponent<Props> = (props) => {
       {!props.disabled && 
       <ButtonViewEnabled style={props.style} onPress={props.onPress}>
         <RegularText
-          textStyle={[{color: colors.darkGreen}, props.textStyle]}
+          textStyle={[{color: colors.darkGreen, fontSize: 20}, props.textStyle]}
         >
           {props.children}
         </RegularText>

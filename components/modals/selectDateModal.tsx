@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Modal, Platform } from 'react-native';
+import { Modal, Platform, View } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 // Styled components
 import styled from 'styled-components/native';
@@ -17,67 +17,90 @@ const ModalPressableContainer = styled.Pressable`
   align-items: center;
 `;
 
-const ModalView = styled.View`
+const ModalViewIOS = styled.View`
   background-color: ${colors.whiteGreen};
   border-radius: 20px;
   width: 100%;
-  padding: 35px;
   align-items: center;
-  elevation: 5;
   shadow-color: #000000;
   shadow-offset: 0px 2px;
   shadow-opacity: 0.25;
   shadow-radius: 4px;
 `;
 
+const ModalView = styled.View`
+  background-color: ${colors.darkGreen};
+  border-radius: 20px;
+  padding: 35px;
+  align-items: center;
+`;
+
 interface Props {
   buttonHandler: any;
-  headerText: string;
   buttonText: string;
   modalVisible: boolean;
+  date: any;
+  setDate: any;
 }
 
 const SelectDateModal: FunctionComponent<Props> = (props) => {
-  const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
-
-  const onChange = (event, selectedDate) => {
-    if (Platform.OS === 'android') {
-      setShow(false);
-    }
-    setDate(selectedDate);
-  };
-
-  return (
-    <Modal
-      animationType='slide'
-      visible={props.modalVisible}
-      transparent={true}
-    >
-      <ModalPressableContainer>
-        <ModalView>
-          <LargeText
-            textStyle={{fontSize: 25, color: colors.darkGreen, marginVertical: 10}}
-          >
-            {props.headerText}
-          </LargeText>
+  if (Platform.OS === 'ios') {
+  
+    const onChange = (event, selectedDate) => {
+      props.setDate(selectedDate);
+    };
+  
+    return (
+      <Modal
+        animationType='slide'
+        visible={props.modalVisible}
+        transparent={true}
+      >
+        <ModalPressableContainer>
+          <ModalViewIOS>
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={props.date}
+                mode={'date'}
+                display='inline'
+                onChange={onChange}
+                minimumDate={new Date()}
+              />
+            <RegularButton
+              onPress={props.buttonHandler}
+            >
+              {props.buttonText || 'OK'}
+            </RegularButton>
+          </ModalViewIOS>
+        </ModalPressableContainer>
+      </Modal>
+    );
+  } else {
+  
+    const onChange = (event, selectedDate) => {
+      props.setDate(selectedDate);
+      props.buttonHandler();
+    };
+  
+    return (
+      <Modal
+        animationType='slide'
+        visible={props.modalVisible}
+        transparent={true}
+      >
+        <ModalPressableContainer>
           <DateTimePicker
             testID="dateTimePicker"
-            value={date}
+            value={props.date}
             mode={'date'}
             display='inline'
             onChange={onChange}
             minimumDate={new Date()}
           />
-          <RegularButton
-            onPress={props.buttonHandler}
-          >
-            {props.buttonText || 'OK'}
-          </RegularButton>
-        </ModalView>
-      </ModalPressableContainer>
-    </Modal>
-  );
+        </ModalPressableContainer>
+      </Modal>
+    );
+  }
 }
 
 export default SelectDateModal;

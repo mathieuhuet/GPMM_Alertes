@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -17,11 +17,14 @@ import { ScreenHeight } from '../components/shared';
 import SmallText from '../components/texts/smallText';
 import SelectDateModal from '../components/modals/selectDateModal';
 import SelectTimeModal from '../components/modals/selectTimeModal';
-
+import SelectDateButton from '../components/buttons/selestDateButton';
+import SelectTimeButton from '../components/buttons/selectTimeButton';
 
 
 const Create: FunctionComponent = ({ navigation }) => {
   const [message, setMessage] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
   const [showDateModal, setShowDateModal] = useState(false);
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [openDep, setOpenDep] = useState(false);
@@ -147,34 +150,44 @@ const Create: FunctionComponent = ({ navigation }) => {
                     }}
                   />
                 </View>
-                <RegularButton
+                <SmallText>
+                  Quelle journée?
+                </SmallText>
+                <SelectDateButton
                   onPress={() => setShowDateModal(true)}
                 >
-                  show DATE modal
-                </RegularButton>
+                  {date.toLocaleDateString()}
+                </SelectDateButton>
                 <SelectDateModal
                   buttonHandler={() => setShowDateModal(false)}
-                  headerText='test'
                   modalVisible={showDateModal}
                   buttonText='close'
+                  date={date}
+                  setDate={setDate}
                 />
-                <RegularButton
+                <SmallText>
+                  À quelle heure?
+                </SmallText>
+                <SelectTimeButton
                   onPress={() => setShowTimeModal(true)}
                 >
-                  show TIME modal
-                </RegularButton>
+                  {Platform.OS === 'ios' ? time.toLocaleTimeString().slice(0, -3) : time.toLocaleTimeString().slice(0, -9)}
+                </SelectTimeButton>
                 <SelectTimeModal
                   buttonHandler={() => setShowTimeModal(false)}
-                  headerText='test'
                   modalVisible={showTimeModal}
                   buttonText='close'
+                  time={time}
+                  setTime={setTime}
                 />
                 <MessageBox
                   textStyle={{ marginBottom: 20 }}
                 >
                   { message || ' ' }
                 </MessageBox>
-                {isSubmitting && <RegularButton>
+                {isSubmitting && <RegularButton
+                  style={{elevation: 0}}
+                >
                   <ActivityIndicator
                     size="small"
                     color={colors.darkGreen}
@@ -182,6 +195,7 @@ const Create: FunctionComponent = ({ navigation }) => {
                 </RegularButton>}
                 {!isSubmitting && <RegularButton
                   onPress={handleSubmit}
+                  style={{elevation: 0}}
                 >
                   Créer
                 </RegularButton>}

@@ -8,7 +8,8 @@ import { colors } from '../colors';
 
 const StyledView = styled.View`
   flex: 1;
-  padding: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
   padding-top: ${StatusBarHeight + 25}px;
   background-color: ${colors.white};
 `;

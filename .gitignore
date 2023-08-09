@@ -3,6 +3,9 @@
 # dependencies
 node_modules/
 
+# hidden constant
+secret.ts
+
 # Expo
 .expo/
 dist/
@@ -33,6 +36,3 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-# hidden constant
-secret.ts
