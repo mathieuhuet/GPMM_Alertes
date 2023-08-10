@@ -46,13 +46,11 @@ const SiteActivity: FunctionComponent = ({navigation}) => {
       <MainContainer style={{backgroundColor: 'transparent'}}>
         {activityLoaded ?
             <View>
-              <LargeText textStyle={{marginBottom: 25, fontWeight: 'bold', color: colors.darkGreen}}>
-                Sites
-              </LargeText>
               {activities.map((activity) => 
                 <StyledView
                   style={{backgroundColor: colors.white, width: '100%', marginBottom: 10, padding: 10, borderRadius: 10}}
                   key={activity._id.toString()}
+                  onPress={() => navigation.navigate('ActivityDetails', activity)}
                 >
                   <View
                     style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
@@ -68,11 +66,8 @@ const SiteActivity: FunctionComponent = ({navigation}) => {
                   >
                     {getLevelOptions(activity.level)}
                   </LargeText>
-                  <RegularText>
-                    Betting ends : 
-                  </RegularText>
                   <RegularText
-                    textStyle={{fontWeight: 'bold'}}
+                    textStyle={{fontWeight: 'bold', marginTop: 10}}
                     >
                       {new Date(activity.activityDate).toDateString()} at {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
                   </RegularText>

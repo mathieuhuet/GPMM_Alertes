@@ -69,6 +69,7 @@ const SelectTimeModal: FunctionComponent<Props> = (props) => {
               onChange={onChange}
               style={{alignSelf: 'center', width: '80%'}}
               minimumDate={new Date()}
+              themeVariant='dark'
             />
             <RegularButton
               onPress={props.buttonHandler}

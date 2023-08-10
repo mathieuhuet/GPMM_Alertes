@@ -48,6 +48,34 @@ const Create: FunctionComponent = ({ navigation }) => {
   const [itemsEmp, setItemsEmp] = useState([
 
   ]);
+  const [openSite, setOpenSite] = useState(false);
+  const [valueSite, setValueSite] = useState(null);
+  const [itemsSite, setItemsSite] = useState([
+    {label: 'PCC (Poste de Commande Centralisé)', value: 'PCC'},
+    {label: 'PCCR (Poste de Commande Centralisé de Relève)', value: 'PCCR'},
+    {label: 'MSF (Atelier de Maintenance)', value: 'MSF'},
+    {label: 'RIV (Brossard)', value: 'RIV'},
+    {label: 'DUQ (Du Quartier)', value: 'DUQ'},
+    {label: 'PAN (Panama)', value: 'PAN'},
+    {label: 'IDS (Île-des-Soeurs)', value: 'IDS'},
+    {label: 'GCT (Gare Centrale)', value: 'GCT'},
+  ]);
+  const [openSys, setOpenSys] = useState(false);
+  const [valueSys, setValueSys] = useState(null);
+  const [itemsSys, setItemsSys] = useState([
+    {label: 'Billeterie', value: 'bil'},
+    {label: 'DAT', value: 'dat', parent: 'bil'},
+    {label: 'Portillons', value: 'por', parent: 'bil'},
+    {label: 'Portes pallières', value: 'ppa'},
+    {label: 'PSDCU', value: 'psd', parent: 'ppa'},
+    {label: 'ATS', value: 'ats'},
+    {label: 'CCTV', value: 'cctv'},
+    {label: 'Archiveur', value: 'arch', parent: 'cctv'},
+    {label: 'Genetec', value: 'gen', parent: 'cctv'},
+    {label: 'Annonce Passager', value: 'pa'},
+    {label: 'Haut-Parleurs', value: 'hp', parent: 'pa'},
+    {label: 'Moniteurs', value: 'mon', parent: 'pa'},
+  ]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessageType, setModalMessageType] = useState('');
   const [modalHeaderText, setModalHeaderText] = useState('');
@@ -68,7 +96,13 @@ const Create: FunctionComponent = ({ navigation }) => {
       return setMessage("Remplissez tout les champs,\nChoisissez l'un des niveau d'importance pour l'activité");
     } else if (valueDep === null) {
       setSubmitting(false);
-      return setMessage('Remplissez tout les champs,\nChoisissez un département');
+      return setMessage("Remplissez tout les champs,\nChoisissez un département concerné pour l'activité");
+    } else if (valueSys === null) {
+      setSubmitting(false);
+      return setMessage("Remplissez tout les champs,\nChoisissez un système concerné pour l'activité");
+    } else if (valueSite === null) {
+      setSubmitting(false);
+      return setMessage("Remplissez tout les champs,\nChoisissez un site concerné pour l'activité");
     }
     try {
       setMessage('');
@@ -80,7 +114,9 @@ const Create: FunctionComponent = ({ navigation }) => {
         activityDate: date,
         level: valueLvl,
         department: valueDep,
-        employee: valueEmp
+        employee: valueEmp,
+        site: valueSite,
+        system: valueSys,
       }
       const result = await postActivity(activity, user.accessToken)
       setSubmitting(false);
@@ -156,6 +192,64 @@ const Create: FunctionComponent = ({ navigation }) => {
                     setItems={setItemsLvl}
                     listMode='MODAL'
                     modalTitle='Choisissez le département concerné.'
+                    modalContentContainerStyle={{ backgroundColor: colors.whiteGreen }}
+                    modalAnimationType='slide'
+                    style={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.lightGreen,
+                      borderWidth: 2
+                    }}
+                    textStyle={{
+                      color: colors.darkGreen,
+                      fontSize: 18
+                    }}
+                  />
+                </View>
+                <SmallText>
+                  Emplacement?
+                </SmallText>
+                <View
+                  style={{zIndex: 10}}
+                >
+                  <DropDownPicker
+                    placeholder=''
+                    open={openSite}
+                    value={valueSite}
+                    items={itemsSite}
+                    setOpen={setOpenSite}
+                    setValue={setValueSite}
+                    setItems={setItemsSite}
+                    listMode='MODAL'
+                    modalTitle="Choisissez l'emplacement concerné."
+                    modalContentContainerStyle={{ backgroundColor: colors.whiteGreen }}
+                    modalAnimationType='slide'
+                    style={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.lightGreen,
+                      borderWidth: 2
+                    }}
+                    textStyle={{
+                      color: colors.darkGreen,
+                      fontSize: 18
+                    }}
+                  />
+                </View>
+                <SmallText>
+                  Système concerné?
+                </SmallText>
+                <View
+                  style={{zIndex: 10}}
+                >
+                  <DropDownPicker
+                    placeholder=''
+                    open={openSys}
+                    value={valueSys}
+                    items={itemsSys}
+                    setOpen={setOpenSys}
+                    setValue={setValueSys}
+                    setItems={setItemsSys}
+                    listMode='MODAL'
+                    modalTitle='Choisissez le système concerné.'
                     modalContentContainerStyle={{ backgroundColor: colors.whiteGreen }}
                     modalAnimationType='slide'
                     style={{

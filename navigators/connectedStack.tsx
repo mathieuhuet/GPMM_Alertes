@@ -8,6 +8,7 @@ import ChangeIcon from '../screens/more/changeIcon';
 import Create from '../screens/create';
 import ListSites from '../screens/List/listSites';
 import SiteActivity from '../screens/activity/siteActivity';
+import ActivityDetails from '../screens/activity/activityDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,10 @@ const ConnectedStack: FunctionComponent = (props) => {
         <Stack.Screen
           name='SiteActivity'
           component={SiteActivity}
+        />
+        <Stack.Screen
+          name='ActivityDetails'
+          component={ActivityDetails}
         />
       </Stack.Navigator>
     </NavigationContainer>

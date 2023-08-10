@@ -65,6 +65,7 @@ const SelectDateModal: FunctionComponent<Props> = (props) => {
                 display='inline'
                 onChange={onChange}
                 minimumDate={new Date()}
+                themeVariant='dark'
               />
             <RegularButton
               onPress={props.buttonHandler}
