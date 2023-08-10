@@ -5,7 +5,7 @@ const API = GPMM_USER_API
 : 'http://192.168.1.5:10101/user';
 
 
-export const logoutUser = (accessToken:string) => {
+export const logoutUser = (accessToken: string) => {
   return new Promise((resolve, reject) => {
     console.log(API);
     axios.post(

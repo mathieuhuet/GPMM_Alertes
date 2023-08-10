@@ -4,7 +4,7 @@ const API = GPMM_USER_API
 ? GPMM_USER_API
 : 'http://192.168.1.5:10101/user';
 
-export const changeIcon = (data, accessToken: string) => {
+export const changeIcon = (data: any, accessToken: string) => {
     return new Promise((resolve, reject) => {
         console.log(API);
         axios.put(

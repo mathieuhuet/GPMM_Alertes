@@ -10,8 +10,12 @@ import SmallText from '../texts/smallText';
 
 const InputField = styled.TextInput`
   background-color: ${colors.white};
-  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   font-size: 16px;
   height: 60px;
   margin-top: 3px;

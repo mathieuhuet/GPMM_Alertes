@@ -18,7 +18,7 @@ const ModalPressableContainer = styled.Pressable`
 `;
 
 const ModalViewIOS = styled.View`
-  background-color: ${colors.whiteGreen};
+  background-color: ${colors.darkGreen};
   border-radius: 20px;
   width: 100%;
   align-items: center;

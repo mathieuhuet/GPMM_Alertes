@@ -4,11 +4,12 @@ export const initialUser = {
   email: '',
   profileIconColor: '',
   profileIconBackgroundColor: '',
+  _id: '',
   accessToken: ''
 }
 
 
-export const userReducer = (user, action) => {
+export const userReducer = (user: any, action: any) => {
   switch (action.type) {
     case 'SET_ACCESSTOKEN': {
       return {
@@ -44,6 +45,7 @@ export const userReducer = (user, action) => {
         profileIconColor: action.payload.profileIconColor,
         profileIconBackgroundColor: action.payload.profileIconBackgroundColor,
         email: action.payload.email,
+        _id: action.payload._id
       }
     }
     default: {

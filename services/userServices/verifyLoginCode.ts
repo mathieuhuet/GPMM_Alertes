@@ -4,7 +4,7 @@ const API = GPMM_USER_API
 ? GPMM_USER_API
 : 'http://192.168.1.5:10101/user';
 
-export const verifyUser = (data) => {
+export const verifyUser = (data: any) => {
   return new Promise((resolve, reject) => {
     console.log(API);
     axios.post(

@@ -6,7 +6,8 @@ import Dashboard from '../screens/dashboard';
 import More from '../screens/more/more';
 import ChangeIcon from '../screens/more/changeIcon';
 import Create from '../screens/create';
-
+import ListSites from '../screens/List/listSites';
+import SiteActivity from '../screens/activity/siteActivity';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,14 @@ const ConnectedStack: FunctionComponent = (props) => {
         <Stack.Screen
           name='Create'
           component={Create}
+        />
+        <Stack.Screen
+          name='List'
+          component={ListSites}
+        />
+        <Stack.Screen
+          name='SiteActivity'
+          component={SiteActivity}
         />
       </Stack.Navigator>
     </NavigationContainer>

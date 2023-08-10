@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent, useContext, useState } from 'react';
 import { View, ActivityIndicator, Pressable } from 'react-native';
 import styled from 'styled-components/native';
 import { UserContext, UserDispatchContext } from '../context/user/userContext';
@@ -14,12 +14,25 @@ import { colors } from '../components/colors';
 import ProfileIcon from '../components/icons/profileIcon';
 import IconButton from '../components/buttons/iconButton';
 import RoundIconButton from '../components/buttons/roundIconButton';
+import DashboardMenuModal from '../components/modals/dashboardMenuModal';
 
 
 
 const Dashboard: FunctionComponent = ({navigation}) => {
   const user = useContext(UserContext);
   const dispatch = useContext(UserDispatchContext);
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const goToMore = () => {
+    setModalVisible(false);
+    navigation.navigate('More');
+  }
+
+  const goToList = () => {
+    setModalVisible(false);
+    navigation.navigate('List');
+  }
 
   console.log(user);
 
@@ -34,7 +47,7 @@ const Dashboard: FunctionComponent = ({navigation}) => {
               name='menu'
               size={8}
               style={{backgroundColor: colors.lightGray}}
-              onPress={() => navigation.navigate('More')}
+              onPress={() => setModalVisible(true)}
             />
             <RoundIconButton
               name='plus'
@@ -47,6 +60,12 @@ const Dashboard: FunctionComponent = ({navigation}) => {
           >
             <REM_Network/>
           </View>
+          <DashboardMenuModal
+            modalVisible={modalVisible}
+            closeModal={() => setModalVisible(false)}
+            navigateList={goToList}
+            navigateMore={goToMore}
+          />
         </>
       :
         <MainContainer style={{backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
