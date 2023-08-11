@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect, useContext } from 'react';
-import { ActivityIndicator, View, Platform } from 'react-native';
+import { ActivityIndicator, ScrollView, View, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import { fetchSites } from '../../services/siteServices/fetchSites';
 
@@ -41,43 +41,47 @@ const ListSites: FunctionComponent = ({navigation}) => {
   }, [user])
 
   return (
-    <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0, backgroundColor: colors.whiteGreen}} >
-      <MainContainer style={{backgroundColor: 'transparent'}}>
-        {siteLoaded ?
-            <View>
-              <LargeText textStyle={{marginBottom: 25, fontWeight: 'bold', color: colors.darkGreen}}>
-                Sites
-              </LargeText>
-              {sites.map((site) => 
-                <StyledView
-                  style={{backgroundColor: colors.white, width: '100%', marginBottom: 10, padding: 10, borderRadius: 10}}
-                  key={site._id.toString()}
-                  onPress={() => navigation.navigate('SiteActivity', site)}
+    <MainContainer style={{backgroundColor: colors.whiteGreen, paddingTop: 0, paddingLeft: 0, paddingRight: 0}} >
+      <View
+        style={{backgroundColor: colors.darkGreen}}
+      >
+        <LargeText textStyle={{marginBottom: 25, fontWeight: 'bold', color: colors.whiteGreen, paddingTop: 60, paddingLeft: 20}}>
+          Sites
+        </LargeText>
+      </View>
+      {siteLoaded ?
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+          >
+            {sites.map((site) => 
+              <StyledView
+                style={{backgroundColor: colors.white, width: '90%', padding: 10, borderRadius: 10, alignSelf: 'center', marginTop: 10}}
+                key={site._id.toString()}
+                onPress={() => navigation.navigate('SiteActivity', site)}
+              >
+                <View
+                  style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}}
                 >
-                  <View
-                    style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
+                  <LargeText
+                    textStyle={{fontWeight: 'bold'}}
                   >
-                    <LargeText
-                      textStyle={{fontWeight: 'bold'}}
-                    >
-                      {site.name}
-                    </LargeText>
-                    <LargeText
-                      textStyle={{fontWeight: 'bold'}}
-                    >
-                      {site.acronym}
-                    </LargeText>
-                  </View>
-                </StyledView>
-              )}
-            </View>
-          :
-          <ActivityIndicator
-              size='large'
-              color={colors.darkGreen}
-          />
-          }
-      </MainContainer>
+                    {site.acronym}
+                  </LargeText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold'}}
+                  >
+                    {site.name}
+                  </RegularText>
+                </View>
+              </StyledView>
+            )}
+          </ScrollView>
+        :
+        <ActivityIndicator
+            size='large'
+            color={colors.darkGreen}
+        />
+        }
     </MainContainer>
   );
 }

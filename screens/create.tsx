@@ -13,7 +13,6 @@ import RegularText from '../components/texts/regularText';
 import TextInput from '../components/inputs/textInput';
 import MessageBox from '../components/texts/messageBox';
 import RegularButton from '../components/buttons/regularButton';
-import PressableText from '../components/texts/pressableText';
 import { colors } from '../components/colors';
 import { ScreenHeight } from '../components/shared';
 import SmallText from '../components/texts/smallText';
@@ -23,7 +22,7 @@ import SelectDateButton from '../components/buttons/selestDateButton';
 import SelectTimeButton from '../components/buttons/selectTimeButton';
 import MessageModal from '../components/modals/messageModal';
 
-const Create: FunctionComponent = ({ navigation }) => {
+const Create: FunctionComponent = ({ navigation }: any) => {
   const user = useContext(UserContext);
   const [message, setMessage] = useState('');
   const [date, setDate] = useState(new Date());
@@ -90,7 +89,7 @@ const Create: FunctionComponent = ({ navigation }) => {
     setModalVisible(true);
   }
 
-  const handleNewActivity = async (credentials, setSubmitting) => {
+  const handleNewActivity = async (credentials: any, setSubmitting: any) => {
     if (valueLvl === null) {
       setSubmitting(false);
       return setMessage("Remplissez tout les champs,\nChoisissez l'un des niveau d'importance pour l'activité");

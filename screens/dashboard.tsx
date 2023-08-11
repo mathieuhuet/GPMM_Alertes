@@ -46,8 +46,9 @@ const Dashboard: FunctionComponent = ({navigation}) => {
             <IconButton
               name='menu'
               size={8}
-              style={{backgroundColor: colors.lightGray}}
+              style={{backgroundColor: colors.darkGreen}}
               onPress={() => setModalVisible(true)}
+              color={colors.white}
             />
             <RoundIconButton
               name='plus'
@@ -56,9 +57,18 @@ const Dashboard: FunctionComponent = ({navigation}) => {
             />
           </View>
           <View
-            style={{marginTop: -ScreenHeight / 4, zIndex: 1}}
+            style={{marginTop: -ScreenHeight / 4, zIndex: 2}}
           >
-            <REM_Network/>
+            <REM_Network
+              RIVOnPress={() => navigation.navigate('SiteActivity', {acronym: 'RIV', name: "Brossard"})}
+              DUQOnPress={() => navigation.navigate('SiteActivity', {acronym: 'DUQ', name: "Du Quartier"})}
+              PANOnPress={() => navigation.navigate('SiteActivity', {acronym: 'PAN', name: "Panama"})}
+              IDSOnPress={() => navigation.navigate('SiteActivity', {acronym: 'IDS', name: "Île-des-Soeurs"})}
+              GCTOnPress={() => navigation.navigate('SiteActivity', {acronym: 'GCT', name: "Gare Centrale"})}
+              PCCOnPress={() => navigation.navigate('SiteActivity', {acronym: 'PCC', name: "Poste de Commande Centralisé"})}
+              PCCROnPress={() => navigation.navigate('SiteActivity', {acronym: 'PCCR', name: "Poste de Commande Centralisé de Relève"})}
+              MSFOnPress={() => navigation.navigate('SiteActivity', {acronym: 'MSF', name: "Atelier de Maintenance"})}
+            />
           </View>
           <DashboardMenuModal
             modalVisible={modalVisible}

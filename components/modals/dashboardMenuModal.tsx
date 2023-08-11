@@ -5,7 +5,6 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import { colors } from '../colors';
 import RegularButton from '../buttons/regularButton';
-import CloseButton from '../buttons/closeButton';
 import { ScreenHeight, ScreenWidth } from '../shared';
 
 
@@ -13,7 +12,7 @@ const ModalPressableContainer = styled.Pressable`
   flex: 1;
   padding: 25px;
   background-color: rgba(0, 0, 0, 0.7);
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
 
@@ -36,23 +35,23 @@ const DashboardMenuModal: FunctionComponent<Props> = (props) => {
         onPress={props.closeModal}
       >
         <View
-          style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-around', width: '100%', height: ScreenHeight}}
+          style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', width: '100%', height: '40%'}}
         >
           <RegularButton
-            style={{}}
+            style={{backgroundColor: colors.darkGreen}}
             onPress={props.navigateList}
-            textStyle={{fontSize: 20}}
+            textStyle={{fontSize: 20, color: colors.whiteGreen}}
           >
-            <Ionicons name="list-outline" size={24} color={colors.darkGreen} />
+            <Ionicons name="list-outline" size={24} color={colors.whiteGreen} />
             Liste
           </RegularButton>
           <RegularButton
-            style={{}}
+            style={{backgroundColor: colors.darkGreen}}
             onPress={props.navigateMore}
-            textStyle={{fontSize: 20}}
+            textStyle={{fontSize: 20, color: colors.whiteGreen}}
           >
-            <MaterialCommunityIcons name="account" size={24} color={colors.darkGreen} />
-            More
+            <MaterialCommunityIcons name="account" size={24} color={colors.whiteGreen} />
+            Plus
           </RegularButton>
         </View>
       </ModalPressableContainer>
