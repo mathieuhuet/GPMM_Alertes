@@ -102,36 +102,54 @@ const ActivityDetails: FunctionComponent = ({navigation, route}) => {
               </RegularText>
             </TouchableOpacity>
           </View>
-          <View
-            style={{paddingLeft: 20}}
-          >
-            <RegularText textStyle={{marginBottom: 20, color: colors.darkGreen}}>
-              {activity.description}
-            </RegularText>
-            <RegularText textStyle={{marginBottom: 5, color: colors.darkGreen, fontWeight: 'bold'}}>
-              {getDepartmentOptions(activity.department)}
-            </RegularText>
-            <RegularText textStyle={{marginBottom: 5, color: colors.darkGreen, fontWeight: 'bold'}}>
-              {getLevelOptions(activity.level)}
-            </RegularText>
-            <RegularText
-              textStyle={{fontWeight: 'bold', marginBottom: 20, color: colors.darkGreen}}
+          {focusTab === 'detail' && 
+          <View>
+            <View
+              style={{paddingLeft: 20}}
+            >
+              <RegularText textStyle={{marginBottom: 20, color: colors.darkGreen}}>
+                {activity.description}
+              </RegularText>
+              <RegularText textStyle={{marginBottom: 5, color: colors.darkGreen, fontWeight: 'bold'}}>
+                {getDepartmentOptions(activity.department)}
+              </RegularText>
+              <RegularText textStyle={{marginBottom: 5, color: colors.darkGreen, fontWeight: 'bold'}}>
+                {getLevelOptions(activity.level)}
+              </RegularText>
+              <RegularText
+                textStyle={{fontWeight: 'bold', marginBottom: 20, color: colors.darkGreen}}
+                >
+                  {new Date(activity.activityDate).toLocaleDateString()} {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
+              </RegularText>
+            </View>
+            <View>
+              <RegularButton
+                onPress={() => setDeleteModalVisible(true)}
+                style={{backgroundColor: colors.failure, width: '20%'}}
               >
-                {new Date(activity.activityDate).toLocaleDateString()} {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
-            </RegularText>
+                <Entypo
+                  name='trash'
+                  size={30}
+                  color={colors.darkGreen}
+                />
+              </RegularButton>
+            </View>
           </View>
-        </View>
-        <View>
-          <RegularButton
-            onPress={() => setDeleteModalVisible(true)}
-            style={{backgroundColor: colors.failure, width: '20%'}}
-          >
-            <Entypo
-              name='trash'
-              size={30}
-              color={colors.darkGreen}
-            />
-          </RegularButton>
+          }
+          {focusTab === 'acquiter' && 
+            <View>
+              <RegularText>
+                Acquiter l'activité.
+              </RegularText>
+            </View>
+          }
+          {focusTab === 'comments' && 
+            <View>
+              <RegularText>
+                Commentaires
+              </RegularText>
+            </View>
+          }
         </View>
       </View>
       <DeleteActivityModal

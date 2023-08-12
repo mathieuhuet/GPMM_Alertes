@@ -23,7 +23,7 @@ const Background = styled.Image`
   bottom: -1px;
 `;
 
-const SiteActivity: FunctionComponent = ({navigation, route}) => {
+const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
   const user = useContext(UserContext);
   const site = route.params;
   const [activities, setActivities] = useState([]);
@@ -96,42 +96,141 @@ const SiteActivity: FunctionComponent = ({navigation, route}) => {
         </TouchableOpacity>
       </View>
       {activityLoaded ?
-        <View
-          style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
-        >
-          {activities.map((activity) => 
-            <StyledView
-              style={{backgroundColor: colors.white, width: '90%', marginBottom: 10, padding: 10, borderRadius: 10}}
-              key={activity._id.toString()}
-              onPress={() => navigation.navigate('ActivityDetails', activity)}
+        <>
+          {focusTab === 'past' && 
+            <View
+              style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
             >
-              <View
-                style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
-              >
-                <LargeText
-                  textStyle={{fontWeight: 'bold'}}
+              {activities.map((activity) => 
+                <View
+                  key={activity._id.toString()}
+                  style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
                 >
-                  {activity.title}
-                </LargeText>
-              </View>
-              <LargeText
-                textStyle={{fontSize: 20, textAlign: 'right'}}
-              >
-                {getLevelOptions(activity.level)}
-              </LargeText>
-              <RegularText
-                textStyle={{fontWeight: 'bold', marginTop: 10}}
-              >
-                {new Date(activity.activityDate).toLocaleDateString()}
-              </RegularText>
-              <RegularText
-                textStyle={{fontWeight: 'bold'}}
-              >
-                {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
-              </RegularText>
-            </StyledView>
-          )}
-        </View>
+                {activity.acquiter &&
+                  <StyledView
+                  style={{backgroundColor: colors.white, width: '90%', marginBottom: 10, padding: 10, borderRadius: 10}}
+                  onPress={() => navigation.navigate('ActivityDetails', activity)}
+                >
+                  <View
+                    style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
+                  >
+                    <LargeText
+                      textStyle={{fontWeight: 'bold'}}
+                    >
+                      {activity.title}
+                    </LargeText>
+                  </View>
+                  <LargeText
+                    textStyle={{fontSize: 20, textAlign: 'right'}}
+                  >
+                    {getLevelOptions(activity.level)}
+                  </LargeText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold', marginTop: 10}}
+                  >
+                    {new Date(activity.activityDate).toLocaleDateString()}
+                  </RegularText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold'}}
+                  >
+                    {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
+                  </RegularText>
+                </StyledView>
+                }
+                </View>
+              )}
+            </View>
+          }
+          {focusTab === 'now' && 
+            <View
+              style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
+            >
+              {activities.map((activity) => 
+                <View
+                  key={activity._id.toString()}
+                  style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
+                >
+                {new Date(activity.activityDate) < new Date() && !activity.acquiter &&
+                  <StyledView
+                  style={{backgroundColor: colors.darkGreen, width: '90%', marginBottom: 10, padding: 10, borderRadius: 10}}
+                  onPress={() => navigation.navigate('ActivityDetails', activity)}
+                >
+                  <View
+                    style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
+                  >
+                    <LargeText
+                      textStyle={{fontWeight: 'bold', color: colors.neonGreen}}
+                    >
+                      {activity.title}
+                    </LargeText>
+                  </View>
+                  <LargeText
+                    textStyle={{fontSize: 20, textAlign: 'right', color: colors.neonGreen}}
+                  >
+                    {getLevelOptions(activity.level)}
+                  </LargeText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold', marginTop: 10, color: colors.neonGreen}}
+                  >
+                    {new Date(activity.activityDate).toLocaleDateString()}
+                  </RegularText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold', color: colors.neonGreen}}
+                  >
+                    {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
+                  </RegularText>
+                </StyledView>
+                }
+                </View>
+              )}
+            </View>
+          }
+          {focusTab === 'futur' && 
+            <View
+              style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
+            >
+              {activities.map((activity) => 
+                <View
+                  key={activity._id.toString()}
+                  style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
+                >
+                {new Date(activity.activityDate) > new Date() && !activity.acquiter &&
+                  <StyledView
+                  style={{backgroundColor: colors.white, width: '90%', marginBottom: 10, padding: 10, borderRadius: 10}}
+                  key={activity._id.toString()}
+                  onPress={() => navigation.navigate('ActivityDetails', activity)}
+                >
+                  <View
+                    style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
+                  >
+                    <LargeText
+                      textStyle={{fontWeight: 'bold'}}
+                    >
+                      {activity.title}
+                    </LargeText>
+                  </View>
+                  <LargeText
+                    textStyle={{fontSize: 20, textAlign: 'right'}}
+                  >
+                    {getLevelOptions(activity.level)}
+                  </LargeText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold', marginTop: 10}}
+                  >
+                    {new Date(activity.activityDate).toLocaleDateString()}
+                  </RegularText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold'}}
+                  >
+                    {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
+                  </RegularText>
+                </StyledView>
+                }
+                </View>
+              )}
+            </View>
+          }
+        </>
         :
         <ActivityIndicator
             size='large'
