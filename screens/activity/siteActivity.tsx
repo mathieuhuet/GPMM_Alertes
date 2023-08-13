@@ -43,7 +43,7 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
       }
     }
     getActivities();
-  }, [user])
+  }, [user]);
 
   return (
     <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0, backgroundColor: colors.white}} >

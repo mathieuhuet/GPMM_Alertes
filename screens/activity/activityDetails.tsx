@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect, useContext } from 'react';
 import { View, Platform, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, FontAwesome5 } from '@expo/vector-icons';
 import { deleteActivity } from '../../services/activityServices/deleteActivity';
 import { getLevelOptions } from '../../components/levelOptions';
 import { getDepartmentOptions } from '../../components/departmentOptions';
@@ -17,22 +17,18 @@ import RegularText from '../../components/texts/regularText';
 import StyledView from '../../components/views/styledView';
 import RegularButton from '../../components/buttons/regularButton';
 import DeleteActivityModal from '../../components/modals/deleteActivityModal';
+import CommentModal from '../../components/modals/commentModal';
 
 
 
-const Background = styled.Image`
-  width: 100%;
-  height: ${ScreenHeight * 0.6}px;
-  position: absolute;
-  bottom: -1px;
-`;
-
-const ActivityDetails: FunctionComponent = ({navigation, route}) => {
+const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
   const user = useContext(UserContext);
   const activity = route.params;
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [deleteModalMessage, setDeleteModalMessage] = useState("Voulez-vous vraiment supprimer l'activité?");
+  const [commentModalVisible, setCommentModalVisible] = useState(false);
   const [focusTab, setFocusTab] = useState('detail');
+
 
 
   const deleteActivityPress = async () => {
@@ -134,6 +130,18 @@ const ActivityDetails: FunctionComponent = ({navigation, route}) => {
                 />
               </RegularButton>
             </View>
+            <View>
+              <RegularButton
+                onPress={() => setCommentModalVisible(true)}
+                style={{backgroundColor: colors.failure, width: '20%'}}
+              >
+                <FontAwesome5
+                  name='comment-alt'
+                  size={30}
+                  color={colors.darkGreen}
+                />
+              </RegularButton>
+            </View>
           </View>
           }
           {focusTab === 'acquiter' && 
@@ -157,6 +165,13 @@ const ActivityDetails: FunctionComponent = ({navigation, route}) => {
         modalVisible={deleteModalVisible}
         closeModal={closeDeleteModal}
         message={deleteModalMessage}
+      />
+      <CommentModal
+        modalVisible={commentModalVisible}
+        closeModal={setCommentModalVisible}
+        activityId={activity._id}
+        userId={user._id}
+        userAccessToken={user.accessToken}
       />
     </MainContainer>
   );
