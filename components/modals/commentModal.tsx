@@ -42,7 +42,7 @@ interface Props {
   userAccessToken: any;
 }
 
-const CommentModal: FunctionComponent<Props> = (props) => {à
+const CommentModal: FunctionComponent<Props> = (props) => {
   const [message, setMessage] = useState('Envoyer un commentaire?');
 
   const handleNewActivity = async (credentials: any, setSubmitting: any) => {
@@ -56,10 +56,10 @@ const CommentModal: FunctionComponent<Props> = (props) => {à
         reported: false,
       }
       setSubmitting(false);
-      const result = await postComments(comments, user.accessToken);
+      const result = await postComments(comments, props.userAccessToken);
       if (result.data) {
         console.log(result.data);
-        return setMessage('Commentaire envoyé avec succès.');
+        return props.closeModal();
       }
       return setMessage("Incapable d'envoyer le commentaire.");
     } catch (err) {
@@ -80,7 +80,7 @@ const CommentModal: FunctionComponent<Props> = (props) => {à
       >
         <ModalView>
           <RegularText>
-            Envoyer un commentaire?
+            {message}
           </RegularText>
           <Formik
             initialValues={{comment: ""}}
@@ -88,15 +88,12 @@ const CommentModal: FunctionComponent<Props> = (props) => {à
               if (values.comment === "") {
                 setSubmitting(false);
               } else {
-                handleNewActivity({comment: values.comment}, setSubmitting);
+                handleNewActivity({comments: values.comment}, setSubmitting);
               }
             }}
           >
             {({handleChange, handleBlur, handleSubmit, values, isSubmitting}) => (
               <>
-                <RegularText>
-                  Envoyer un commentaire?
-                </RegularText>
                 <TextInput
                   keyboardType="default"
                   multiline={true}

@@ -43,7 +43,7 @@ const ListSites: FunctionComponent = ({navigation}) => {
   return (
     <MainContainer style={{backgroundColor: colors.whiteGreen, paddingTop: 0, paddingLeft: 0, paddingRight: 0}} >
       <View
-        style={{backgroundColor: colors.darkGreen}}
+        style={{backgroundColor: colors.darkGreen, paddingBottom: 20}}
       >
         <LargeText textStyle={{marginBottom: 25, fontWeight: 'bold', color: colors.whiteGreen, paddingTop: 60, paddingLeft: 20}}>
           Sites
@@ -52,6 +52,7 @@ const ListSites: FunctionComponent = ({navigation}) => {
       {siteLoaded ?
           <ScrollView
             showsVerticalScrollIndicator={false}
+            style={{backgroundColor: colors.whiteGreen}}
           >
             {sites.map((site) => 
               <StyledView

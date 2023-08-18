@@ -302,7 +302,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                 <SelectDateModal
                   buttonHandler={() => setShowDateModal(false)}
                   modalVisible={showDateModal}
-                  buttonText='close'
+                  buttonText='Sélectionner'
                   date={date}
                   setDate={setDate}
                 />
@@ -317,7 +317,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                 <SelectTimeModal
                   buttonHandler={() => setShowTimeModal(false)}
                   modalVisible={showTimeModal}
-                  buttonText='close'
+                  buttonText='Sélectionner'
                   time={date}
                   setTime={setDate}
                 />

@@ -23,7 +23,7 @@ const ButtonView = styled.TouchableOpacity`
 
 interface Props {
   children?: React.ReactNode;
-  name: string;
+  name?: string;
   onPress?: any;
   size: any;
   color?: string;

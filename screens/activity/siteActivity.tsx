@@ -6,7 +6,7 @@ import { fetchActivitiesBySite } from '../../services/activityServices/fetchActi
 // Custom components
 import MainContainer from '../../components/containers/mainContainer';
 import LargeText from '../../components/texts/largeText';
-import { ScreenHeight } from '../../components/shared';
+import { ScreenHeight, ScreenWidth } from '../../components/shared';
 import { colors } from '../../components/colors';
 import { UserContext } from '../../context/user/userContext';
 import RegularText from '../../components/texts/regularText';
@@ -43,7 +43,7 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
       }
     }
     getActivities();
-  }, [user]);
+  }, [user])
 
   return (
     <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0, backgroundColor: colors.white}} >
@@ -65,31 +65,31 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
         style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20}}
       >
         <TouchableOpacity
-          style={[{flex: 1, height: 28}, focusTab === 'past' ? {backgroundColor: colors.white} : {backgroundColor: colors.lightGreen}]}
+          style={[{flex: 1, height: ScreenHeight * 0.05, justifyContent: 'center', borderBottomWidth: 2, borderColor: colors.lightGreen}, focusTab === 'past' ? {backgroundColor: colors.white} : {backgroundColor: colors.lightGreen}]}
           onPress={() => setFocusTab('past')}
         >
           <RegularText
-            textStyle={[{textAlign: 'center'}, focusTab === 'past' ? {color: colors.lightGreen} : {color: colors.white}]}
+            textStyle={[{textAlign: 'center', fontWeight: 'bold'}, focusTab === 'past' ? {color: colors.lightGreen} : {color: colors.white}]}
           >
             Acquité
           </RegularText>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[{flex: 1, height: 28}, focusTab === 'now' ? {backgroundColor: colors.white} : {backgroundColor: colors.lightGreen}]}
+          style={[{flex: 1, height: ScreenHeight * 0.05, justifyContent: 'center', borderBottomWidth: 2, borderColor: colors.lightGreen}, focusTab === 'now' ? {backgroundColor: colors.white} : {backgroundColor: colors.lightGreen}]}
           onPress={() => setFocusTab('now')}
         >
           <RegularText
-            textStyle={[{alignSelf: 'center'}, focusTab === 'now' ? {color: colors.lightGreen} : {color: colors.white}]}
+            textStyle={[{alignSelf: 'center', fontWeight: 'bold'}, focusTab === 'now' ? {color: colors.lightGreen} : {color: colors.white}]}
           >
             En cours
           </RegularText>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[{flex: 1, height: 28}, focusTab === 'futur' ? {backgroundColor: colors.white} : {backgroundColor: colors.lightGreen}]}
+          style={[{flex: 1, height: ScreenHeight * 0.05, justifyContent: 'center', borderBottomWidth: 2, borderColor: colors.lightGreen}, focusTab === 'futur' ? {backgroundColor: colors.white} : {backgroundColor: colors.lightGreen}]}
           onPress={() => setFocusTab('futur')}
         >
           <RegularText
-            textStyle={[{alignSelf: 'center'}, focusTab === 'futur' ? {color: colors.lightGreen} : {color: colors.white}]}
+            textStyle={[{alignSelf: 'center', fontWeight: 'bold'}, focusTab === 'futur' ? {color: colors.lightGreen} : {color: colors.white}]}
           >
             À venir
           </RegularText>

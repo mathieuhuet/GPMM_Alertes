@@ -1,16 +1,17 @@
 import React, { FunctionComponent, useState, useEffect, useContext } from 'react';
-import { View, Platform, TouchableOpacity } from 'react-native';
+import { View, Platform, TouchableOpacity, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { Entypo, FontAwesome5 } from '@expo/vector-icons';
 import { deleteActivity } from '../../services/activityServices/deleteActivity';
 import { getLevelOptions } from '../../components/levelOptions';
 import { getDepartmentOptions } from '../../components/departmentOptions';
+import { fetchComments } from '../../services/activityServices/fetchComments';
 
 
 // Custom components
 import MainContainer from '../../components/containers/mainContainer';
 import LargeText from '../../components/texts/largeText';
-import { ScreenHeight } from '../../components/shared';
+import { ScreenHeight, ScreenWidth } from '../../components/shared';
 import { colors } from '../../components/colors';
 import { UserContext } from '../../context/user/userContext';
 import RegularText from '../../components/texts/regularText';
@@ -18,6 +19,8 @@ import StyledView from '../../components/views/styledView';
 import RegularButton from '../../components/buttons/regularButton';
 import DeleteActivityModal from '../../components/modals/deleteActivityModal';
 import CommentModal from '../../components/modals/commentModal';
+import RoundIconButton from '../../components/buttons/roundIconButton';
+import CommentContainer from '../../components/containers/commentContainer';
 
 
 
@@ -27,9 +30,27 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [deleteModalMessage, setDeleteModalMessage] = useState("Voulez-vous vraiment supprimer l'activité?");
   const [commentModalVisible, setCommentModalVisible] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [commentsLoaded, setCommentsLoaded] = useState(false);
   const [focusTab, setFocusTab] = useState('detail');
 
 
+
+  //fetch comments
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const result = await fetchComments(user.accessToken, {activityId: activity._id});
+        setComments(result.data);
+        setCommentsLoaded(true);
+      } catch (error) {
+        console.log(error);
+        setCommentsLoaded(true);
+        setComments([]);
+      }
+    }
+    getComments();
+  }, [user]);
 
   const deleteActivityPress = async () => {
     try {
@@ -60,51 +81,56 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
           <View
             style={{backgroundColor: colors.darkGreen}}
           >
-            <LargeText textStyle={{marginBottom: 5, color: colors.whiteGreen, fontWeight: 'bold', fontSize: 40, paddingLeft: 20, paddingTop: 50}}>
+            <LargeText textStyle={{paddingBottom: 30, color: colors.whiteGreen, fontWeight: 'bold', fontSize: 40, paddingLeft: 20, paddingTop: 50}}>
               {activity.title}
             </LargeText>
           </View>
           <View
-            style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20}}
+            style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}
           >
             <TouchableOpacity
-              style={[{flex: 1, height: 28}, focusTab === 'detail' ? {backgroundColor: colors.white} : {backgroundColor: colors.darkGreen}]}
+              style={[{flex: 1, height: ScreenHeight * 0.05, justifyContent: 'center', borderBottomWidth: 2, borderColor: colors.darkGreen}, focusTab === 'detail' ? {backgroundColor: colors.white} : {backgroundColor: colors.darkGreen}]}
               onPress={() => setFocusTab('detail')}
             >
               <RegularText
-                textStyle={[{textAlign: 'center'}, focusTab === 'detail' ? {color: colors.darkGreen} : {color: colors.white}]}
+                textStyle={[{textAlign: 'center', fontWeight: 'bold'}, focusTab === 'detail' ? {color: colors.darkGreen} : {color: colors.white}]}
               >
                 Détails
               </RegularText>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[{flex: 1, height: 28}, focusTab === 'acquiter' ? {backgroundColor: colors.white} : {backgroundColor: colors.darkGreen}]}
+              style={[{flex: 1, height: ScreenHeight * 0.05, justifyContent: 'center', borderBottomWidth: 2, borderColor: colors.darkGreen}, focusTab === 'acquiter' ? {backgroundColor: colors.white} : {backgroundColor: colors.darkGreen}]}
               onPress={() => setFocusTab('acquiter')}
             >
               <RegularText
-                textStyle={[{alignSelf: 'center'}, focusTab === 'acquiter' ? {color: colors.darkGreen} : {color: colors.white}]}
+                textStyle={[{alignSelf: 'center', fontWeight: 'bold'}, focusTab === 'acquiter' ? {color: colors.darkGreen} : {color: colors.white}]}
               >
                 Acquitement
               </RegularText>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[{flex: 1, height: 28}, focusTab === 'comments' ? {backgroundColor: colors.white} : {backgroundColor: colors.darkGreen}]}
+              style={[{flex: 1, height: ScreenHeight * 0.05, justifyContent: 'center', borderBottomWidth: 2, borderColor: colors.darkGreen}, focusTab === 'comments' ? {backgroundColor: colors.white} : {backgroundColor: colors.darkGreen}]}
               onPress={() => setFocusTab('comments')}
             >
               <RegularText
-                textStyle={[{alignSelf: 'center'}, focusTab === 'comments' ? {color: colors.darkGreen} : {color: colors.white}]}
+                textStyle={[{alignSelf: 'center', fontWeight: 'bold'}, focusTab === 'comments' ? {color: colors.darkGreen} : {color: colors.white}]}
               >
                 Commentaires
               </RegularText>
             </TouchableOpacity>
           </View>
           {focusTab === 'detail' && 
-          <View>
+          <View
+            style={{marginTop: ScreenHeight * 0.02}}
+          >
             <View
               style={{paddingLeft: 20}}
             >
               <RegularText textStyle={{marginBottom: 20, color: colors.darkGreen}}>
                 {activity.description}
+              </RegularText>
+              <RegularText textStyle={{marginBottom: 20, color: colors.darkGreen}}>
+                {activity.creator}
               </RegularText>
               <RegularText textStyle={{marginBottom: 5, color: colors.darkGreen, fontWeight: 'bold'}}>
                 {getDepartmentOptions(activity.department)}
@@ -118,46 +144,75 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
                   {new Date(activity.activityDate).toLocaleDateString()} {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
               </RegularText>
             </View>
-            <View>
-              <RegularButton
-                onPress={() => setDeleteModalVisible(true)}
-                style={{backgroundColor: colors.failure, width: '20%'}}
-              >
-                <Entypo
-                  name='trash'
-                  size={30}
-                  color={colors.darkGreen}
-                />
-              </RegularButton>
-            </View>
-            <View>
-              <RegularButton
+          </View>
+          }
+          {focusTab === 'acquiter' && 
+            <>
+            {activity.acquiter ?
+              <View>
+
+              </View>
+            : 
+              <View>
+                <RegularText>
+                  L'activité n'a pas été acquité.
+                </RegularText>
+                <RegularButton>
+                  Appuyer ici pour acquiter l'activité
+                </RegularButton>
+              </View>
+            }
+            </>
+          }
+          {focusTab === 'comments' && 
+            <ScrollView
+              style={{display: 'flex', flexDirection: 'column', width: '100%', height: '80%'}}
+              contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+            >
+              {comments.map((comment) => 
+                <View
+                  key={comment._id.toString()}
+                >
+                  <CommentContainer
+                    comment={comment.comments}
+                    commentId={comment._id}
+                    creator={comment.creator}
+                    accessToken={user.accessToken}
+                  />
+                </View>
+              )}
+            </ScrollView>
+          }
+            <View
+              style={{position: 'absolute', left: ScreenWidth * 0.7, top: ScreenHeight * 0.8}}
+            >
+              <RoundIconButton
                 onPress={() => setCommentModalVisible(true)}
-                style={{backgroundColor: colors.failure, width: '20%'}}
+                style={{backgroundColor: colors.lightGreen}}
+                size={8}
               >
                 <FontAwesome5
                   name='comment-alt'
                   size={30}
                   color={colors.darkGreen}
                 />
-              </RegularButton>
+              </RoundIconButton>
             </View>
-          </View>
-          }
-          {focusTab === 'acquiter' && 
-            <View>
-              <RegularText>
-                Acquiter l'activité.
-              </RegularText>
+            <View
+              style={{position: 'absolute', left: ScreenWidth * 0.1, top: ScreenHeight * 0.8}}
+            >
+              <RoundIconButton
+                onPress={() => setDeleteModalVisible(true)}
+                style={{backgroundColor: colors.failure}}
+                size={8}
+              >
+                <Entypo
+                  name='trash'
+                  size={30}
+                  color={colors.darkGreen}
+                />
+              </RoundIconButton>
             </View>
-          }
-          {focusTab === 'comments' && 
-            <View>
-              <RegularText>
-                Commentaires
-              </RegularText>
-            </View>
-          }
         </View>
       </View>
       <DeleteActivityModal
@@ -168,7 +223,7 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
       />
       <CommentModal
         modalVisible={commentModalVisible}
-        closeModal={setCommentModalVisible}
+        closeModal={() => setCommentModalVisible(false)}
         activityId={activity._id}
         userId={user._id}
         userAccessToken={user.accessToken}
