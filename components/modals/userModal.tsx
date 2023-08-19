@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Modal, View, Platform } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { getDepartmentOptions } from '../departmentOptions';
 // Styled components
 import styled from 'styled-components/native';
 import { colors } from '../colors';
@@ -9,6 +10,7 @@ import RegularText from '../texts/regularText';
 import RegularButton from '../buttons/regularButton';
 import ProfileIcon from '../icons/profileIcon';
 import SmallText from '../texts/smallText';
+import { ScreenHeight } from '../shared';
 
 
 const ModalPressableContainer = styled.Pressable`
@@ -20,7 +22,7 @@ const ModalPressableContainer = styled.Pressable`
 `;
 
 const ModalView = styled.View`
-  background-color: ${colors.neonGreen};
+  background-color: ${colors.whiteGreen};
   border-radius: 20px;
   width: 100%;
   padding: 35px;
@@ -39,8 +41,9 @@ interface Props {
   color: string;
   backgroundColor: string;
   modalVisible: boolean;
-  joinedAt?: number;
-  createdAt?: number;
+  email: string;
+  role: string;
+  departement: string;
 }
 
 const UserModal: FunctionComponent<Props> = (props) => {
@@ -53,32 +56,8 @@ const UserModal: FunctionComponent<Props> = (props) => {
       <ModalPressableContainer>
         <ModalView>
           <View
-            style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%', marginBottom: 20}}
+            style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around', width: '100%', marginBottom: ScreenHeight * 0.01}}
           >
-            <View>
-              <LargeText>
-                {props.firstName}
-              </LargeText>
-              <LargeText>
-                {props.lastName}
-              </LargeText>
-              {props.joinedAt &&
-              <>
-                {props.joinedAt === props.createdAt ?
-                  <SmallText>
-                    Created the bet on
-                  </SmallText>
-                :
-                  <SmallText>
-                    Joined the bet on
-                  </SmallText>
-                }
-                <RegularText>
-                  {new Date(props.joinedAt).toDateString()} at {Platform.OS === 'ios' ? new Date(props.joinedAt).toLocaleTimeString().slice(0, -3) : new Date(props.joinedAt).toLocaleTimeString().slice(0, -9)}
-                </RegularText>
-              </>
-              }
-            </View>
             <ProfileIcon
               firstName={props.firstName}
               lastName={props.lastName}
@@ -86,11 +65,41 @@ const UserModal: FunctionComponent<Props> = (props) => {
               backgroundColor={props.backgroundColor}
               size={10}
             />
+            <View>
+              <LargeText>
+                {props.firstName}
+              </LargeText>
+              <LargeText>
+                {props.lastName}
+              </LargeText>
+            </View>
           </View>
+          <RegularText
+            textStyle={{marginBottom: ScreenHeight * 0.01}}
+          >
+            {props.email}
+          </RegularText>
+          <View
+            style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%', marginBottom: ScreenHeight * 0.02}}
+          >
+            <SmallText>
+              Département : 
+            </SmallText>
+            <RegularText>
+              {getDepartmentOptions(props.departement)}
+            </RegularText>
+            <SmallText>
+              Rôle : 
+            </SmallText>
+            <RegularText>
+              {props.role}
+            </RegularText>
+          </View>
+
           <RegularButton
             onPress={props.buttonHandler}
           >
-            Close
+            Fermé
           </RegularButton>
         </ModalView>
       </ModalPressableContainer>

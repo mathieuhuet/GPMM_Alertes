@@ -10,6 +10,7 @@ import LargeText from '../texts/largeText';
 import RegularText from '../texts/regularText';
 import RegularButton from '../buttons/regularButton';
 import TextInput from '../inputs/textInput';
+import { ScreenHeight } from '../shared';
 
 
 
@@ -56,7 +57,7 @@ const CommentModal: FunctionComponent<Props> = (props) => {
         reported: false,
       }
       setSubmitting(false);
-      const result = await postComments(comments, props.userAccessToken);
+      const result = await postComments(comments, props.userAccessToken) as any;
       if (result.data) {
         console.log(result.data);
         return props.closeModal();
@@ -79,7 +80,9 @@ const CommentModal: FunctionComponent<Props> = (props) => {
         onPress={props.closeModal}
       >
         <ModalView>
-          <RegularText>
+          <RegularText
+            textStyle={{fontWeight: 'bold', fontSize: ScreenHeight * 0.04}}
+          >
             {message}
           </RegularText>
           <Formik
@@ -102,7 +105,7 @@ const CommentModal: FunctionComponent<Props> = (props) => {
                   onBlur={handleBlur('comment')}
                   value={values.comment}
                   style={{ marginBottom: 15 }}
-                  inputFieldStyle={{}}
+                  inputFieldStyle={{height: ScreenHeight * 0.16}}
                 />
                 {isSubmitting && <RegularButton
                   style={{elevation: 0}}
@@ -116,7 +119,7 @@ const CommentModal: FunctionComponent<Props> = (props) => {
                   onPress={handleSubmit}
                   style={{elevation: 0}}
                 >
-                  Envoyer commentaire
+                  Envoyer
                 </RegularButton>}
               </>
             )}

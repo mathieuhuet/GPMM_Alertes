@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import { Entypo, FontAwesome5 } from '@expo/vector-icons';
 import { deleteActivity } from '../../services/activityServices/deleteActivity';
 import { getLevelOptions } from '../../components/levelOptions';
+import { getTypeOptions } from '../../components/typeOptions';
 import { getDepartmentOptions } from '../../components/departmentOptions';
 import { fetchComments } from '../../services/activityServices/fetchComments';
 import { comment } from '../../utils/interface/commentInterface';
@@ -22,6 +23,8 @@ import DeleteActivityModal from '../../components/modals/deleteActivityModal';
 import CommentModal from '../../components/modals/commentModal';
 import RoundIconButton from '../../components/buttons/roundIconButton';
 import CommentContainer from '../../components/containers/commentContainer';
+import SmallText from '../../components/texts/smallText';
+import UserContainer from '../../components/containers/userContainer';
 
 
 const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
@@ -120,31 +123,92 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
             </TouchableOpacity>
           </View>
           {focusTab === 'detail' && 
-          <View
+          <ScrollView
             style={{marginTop: ScreenHeight * 0.02}}
+            contentContainerStyle={{paddingBottom: 400}}
           >
             <View
-              style={{paddingLeft: 20}}
-            >
-              <RegularText textStyle={{marginBottom: 20, color: colors.darkGreen}}>
+              style={{paddingLeft: 20, paddingRight: 20}}
+            > 
+              <SmallText>
+                Description
+              </SmallText>
+              <RegularText textStyle={{marginBottom: ScreenHeight * 0.04, color: colors.darkGreen}}>
                 {activity.description}
               </RegularText>
-              <RegularText textStyle={{marginBottom: 20, color: colors.darkGreen}}>
-                {activity.creator}
+              <View
+                style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
+              >
+                <View>
+                  <SmallText>
+                    Type d'activité
+                  </SmallText>
+                  <RegularText textStyle={{marginBottom: ScreenHeight * 0.01, color: colors.darkGreen, fontWeight: 'bold'}}>
+                    {getTypeOptions(activity.type)}
+                  </RegularText>
+                </View>
+                <View>
+                  <SmallText>
+                    Importance
+                  </SmallText>
+                  <RegularText textStyle={{marginBottom: ScreenHeight * 0.01, color: colors.darkGreen, fontWeight: 'bold', textAlign: 'right'}}>
+                    {getLevelOptions(activity.level)}
+                  </RegularText>
+                </View>
+              </View>
+              <View
+                style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
+              >
+                <View>
+                  <SmallText>
+                    Département
+                  </SmallText>
+                  <RegularText textStyle={{marginBottom: ScreenHeight * 0.01, color: colors.darkGreen, fontWeight: 'bold'}}>
+                    {getDepartmentOptions(activity.department)}
+                  </RegularText>
+                </View>
+                <View>
+                  <SmallText>
+                    Système concerné
+                  </SmallText>
+                  <RegularText textStyle={{marginBottom: ScreenHeight * 0.01, color: colors.darkGreen, fontWeight: 'bold', textAlign: 'right'}}>
+                    {activity.system}
+                  </RegularText>
+                </View>
+              </View>
+              <SmallText>
+                Créé par
+              </SmallText>
+              <UserContainer
+                userId={activity.creator}
+                accessToken={user.accessToken}
+                style={{padding: ScreenHeight * 0.01}}
+                textStyle={{fontWeight: 'bold'}}
+              />
+              <SmallText>
+                Emplacement
+              </SmallText>
+              <RegularText textStyle={{marginBottom: ScreenHeight * 0.01, color: colors.darkGreen, fontWeight: 'bold'}}>
+                {activity.site}
               </RegularText>
-              <RegularText textStyle={{marginBottom: 5, color: colors.darkGreen, fontWeight: 'bold'}}>
-                {getDepartmentOptions(activity.department)}
-              </RegularText>
-              <RegularText textStyle={{marginBottom: 5, color: colors.darkGreen, fontWeight: 'bold'}}>
-                {getLevelOptions(activity.level)}
-              </RegularText>
+              <SmallText>
+                Activité céduler pour le
+              </SmallText>
               <RegularText
-                textStyle={{fontWeight: 'bold', marginBottom: 20, color: colors.darkGreen}}
+                textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
                 >
-                  {new Date(activity.activityDate).toLocaleDateString()} {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
+                  {new Date(activity.activityDate).toLocaleDateString()}   {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
+              </RegularText>
+              <SmallText>
+                Cette activité à été créé le
+              </SmallText>
+              <RegularText
+                textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
+                >
+                  {new Date(activity.dateCreated).toLocaleDateString()}   {Platform.OS === 'ios' ? new Date(activity.dateCreated).toLocaleTimeString().slice(0, -3) : new Date(activity.dateCreated).toLocaleTimeString().slice(0, -9)}
               </RegularText>
             </View>
-          </View>
+          </ScrollView>
           }
           {focusTab === 'acquiter' && 
             <>
@@ -154,12 +218,33 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
               </View>
             : 
               <View>
-                <RegularText>
-                  L'activité n'a pas été acquité.
-                </RegularText>
-                <RegularButton>
-                  Appuyer ici pour acquiter l'activité
-                </RegularButton>
+                {activity.type === 'intervention' && 
+                  <RegularButton
+                    onPress={() => navigation.navigate('AcquitIntervention', activity)}
+                    style={{height: ScreenHeight * 0.2, width: ScreenWidth * 0.8, marginTop: ScreenHeight * 0.1}}
+                    textStyle={{textAlign: 'center', fontSize: ScreenHeight * 0.04}}
+                  >
+                    Cliquer ici pour acquiter l'activité
+                  </RegularButton>
+                }
+                {activity.type === 'routine' && 
+                  <RegularButton
+                    onPress={() => navigation.navigate('AcquitRoutine', activity)}
+                    style={{height: ScreenHeight * 0.2, width: ScreenWidth * 0.8, marginTop: ScreenHeight * 0.1}}
+                    textStyle={{textAlign: 'center', fontSize: ScreenHeight * 0.04}}
+                  >
+                    Appuyer ici pour acquiter l'activité
+                  </RegularButton>
+                }
+                {activity.type === 'general' && 
+                  <RegularButton
+                    onPress={() => navigation.navigate('AcquitGeneral', activity)}
+                    style={{height: ScreenHeight * 0.2, width: ScreenWidth * 0.8, marginTop: ScreenHeight * 0.1}}
+                    textStyle={{textAlign: 'center', fontSize: ScreenHeight * 0.04}}
+                  >
+                    Appuyer ici pour acquiter l'activité
+                  </RegularButton>
+                }
               </View>
             }
             </>
@@ -183,21 +268,7 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
               )}
             </ScrollView>
           }
-            <View
-              style={{position: 'absolute', left: ScreenWidth * 0.7, top: ScreenHeight * 0.8}}
-            >
-              <RoundIconButton
-                onPress={() => setCommentModalVisible(true)}
-                style={{backgroundColor: colors.lightGreen}}
-                size={8}
-              >
-                <FontAwesome5
-                  name='comment-alt'
-                  size={30}
-                  color={colors.darkGreen}
-                />
-              </RoundIconButton>
-            </View>
+          {activity.creator === user._id && 
             <View
               style={{position: 'absolute', left: ScreenWidth * 0.1, top: ScreenHeight * 0.8}}
             >
@@ -213,6 +284,22 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
                 />
               </RoundIconButton>
             </View>
+          }
+          <View
+            style={{position: 'absolute', left: ScreenWidth * 0.7, top: ScreenHeight * 0.8}}
+          >
+            <RoundIconButton
+              onPress={() => setCommentModalVisible(true)}
+              style={{backgroundColor: colors.lightGreen}}
+              size={8}
+            >
+              <FontAwesome5
+                name='comment-alt'
+                size={30}
+                color={colors.darkGreen}
+              />
+            </RoundIconButton>
+          </View>
         </View>
       </View>
       <DeleteActivityModal

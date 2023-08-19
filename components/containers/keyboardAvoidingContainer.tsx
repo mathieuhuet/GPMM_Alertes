@@ -1,9 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import { KeyboardAvoidingView, Keyboard, ScrollView, Pressable, Platform, View } from 'react-native';
+import { KeyboardAvoidingView, Keyboard, ScrollView, Pressable, Platform, View, StyleProp, ViewStyle } from 'react-native';
 
 
 interface Props {
   children: React.ReactNode;
+  scrollStyle?: StyleProp<ViewStyle>;
 }
 
 const KeyboardAvoidingContainer: FunctionComponent<Props> = (props) => {
@@ -17,6 +18,7 @@ const KeyboardAvoidingContainer: FunctionComponent<Props> = (props) => {
     >
       <ScrollView
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={props.scrollStyle}
       >
         <Pressable
           onPress={Keyboard.dismiss}

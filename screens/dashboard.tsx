@@ -35,7 +35,6 @@ const Dashboard: FunctionComponent = ({navigation}: any) => {
     navigation.navigate('List');
   }
 
-  console.log(user);
 
   return (
     <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0}} >

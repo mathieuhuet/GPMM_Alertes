@@ -48,7 +48,7 @@ interface Props {
 const SelectTimeModal: FunctionComponent<Props> = (props) => {
   if (Platform.OS === 'ios') {
 
-    const onChange = (event, selectedDate) => {
+    const onChange = (event: any, selectedDate: any) => {
       props.setTime(selectedDate);
     };
   
@@ -82,7 +82,7 @@ const SelectTimeModal: FunctionComponent<Props> = (props) => {
     );
   } else {
 
-    const onChange = (event, selectedDate) => {
+    const onChange = (event: any, selectedDate: any) => {
       props.setTime(selectedDate);
       props.buttonHandler();
     };

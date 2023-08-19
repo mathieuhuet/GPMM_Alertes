@@ -55,6 +55,7 @@ const ListSites: FunctionComponent = ({navigation}: any) => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{backgroundColor: colors.whiteGreen}}
+            contentContainerStyle={{paddingBottom: 200}}
           >
             {sites.map((site: site) => 
               <StyledView

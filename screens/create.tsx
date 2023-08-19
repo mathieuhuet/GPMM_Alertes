@@ -34,13 +34,19 @@ const Create: FunctionComponent = ({ navigation }: any) => {
     {label: 'Sig&Com', value: 'sig'},
     {label: 'Bâtiments', value: 'bat'},
   ]);
+  const [openType, setOpenType] = useState(false);
+  const [valueType, setValueType] = useState(null);
+  const [itemsType, setItemsType] = useState([
+    {label: '✅ Routine', value: 'routine'},
+    {label: '🚧 Intervention', value: 'intervention'},
+    {label: '👨‍🔧 Général (autres)', value: 'general'},
+  ]);
   const [openLvl, setOpenLvl] = useState(false);
   const [valueLvl, setValueLvl] = useState(null);
   const [itemsLvl, setItemsLvl] = useState([
     {label: '‼️ Urgent', value: 'urgent'},
     {label: '⚠️ Important', value: 'important'},
     {label: '🛂 Mineur', value: 'mineur'},
-    {label: '✅ Routine', value: 'routine'},
   ]);
   const [openEmp, setOpenEmp] = useState(false);
   const [valueEmp, setValueEmp] = useState([]);
@@ -62,18 +68,19 @@ const Create: FunctionComponent = ({ navigation }: any) => {
   const [openSys, setOpenSys] = useState(false);
   const [valueSys, setValueSys] = useState(null);
   const [itemsSys, setItemsSys] = useState([
-    {label: 'Billeterie', value: 'bil'},
-    {label: 'DAT', value: 'dat', parent: 'bil'},
-    {label: 'Portillons', value: 'por', parent: 'bil'},
-    {label: 'Portes pallières', value: 'ppa'},
-    {label: 'PSDCU', value: 'psd', parent: 'ppa'},
-    {label: 'ATS', value: 'ats'},
-    {label: 'CCTV', value: 'cctv'},
-    {label: 'Archiveur', value: 'arch', parent: 'cctv'},
-    {label: 'Genetec', value: 'gen', parent: 'cctv'},
-    {label: 'Annonce Passager', value: 'pa'},
-    {label: 'Haut-Parleurs', value: 'hp', parent: 'pa'},
-    {label: 'Moniteurs', value: 'mon', parent: 'pa'},
+    {label: 'Billettique', value: 'Billettique'},
+    {label: 'DAT', value: 'DAT', parent: 'Billettique'},
+    {label: 'Portillons', value: 'Portillons', parent: 'Billettique'},
+    {label: 'Portes pallières', value: 'Porte pallières'},
+    {label: 'PSDCU', value: 'PSDCU', parent: 'Porte pallières'},
+    {label: 'ATS', value: 'ATS'},
+    {label: 'CCTV', value: 'CCTV'},
+    {label: 'Archiveur', value: 'Archiveur', parent: 'CCTV'},
+    {label: 'Genetec', value: 'Genetec', parent: 'CCTV'},
+    {label: 'Annonce Passager', value: 'Annonce Passager'},
+    {label: 'Haut-Parleurs', value: 'Haut-Parleurs', parent: 'Annonce Passager'},
+    {label: 'Moniteurs', value: 'Moniteurs', parent: 'Annonce Passager'},
+    {label: 'Autres', value: 'Autres'},
   ]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessageType, setModalMessageType] = useState('');
@@ -87,6 +94,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
     setModalMessage(message);
     setModalButtonText(buttonText);
     setModalVisible(true);
+
   }
 
   const handleNewActivity = async (credentials: any, setSubmitting: any) => {
@@ -111,6 +119,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
         creator: user._id,
         dateCreated: new Date(),
         activityDate: date,
+        type: valueType,
         level: valueLvl,
         department: valueDep,
         employee: valueEmp,
@@ -135,9 +144,11 @@ const Create: FunctionComponent = ({ navigation }: any) => {
     <MainContainer
       style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}
     >
-      <KeyboardAvoidingContainer>
+      <KeyboardAvoidingContainer
+        scrollStyle={{paddingBottom: 200}}
+      >
         <View>
-          <RegularText textStyle={{marginBottom: 25}}>
+          <RegularText textStyle={{marginBottom: 25, fontWeight: 'bold'}}>
             Créer une tâche
           </RegularText>
           <Formik
@@ -161,7 +172,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                   onChangeText={handleChange('title')}
                   onBlur={handleBlur('title')}
                   value={values.title}
-                  style={{ marginBottom: 15 }}
+                  style={{ marginBottom: ScreenHeight * 0.01 }}
                   inputFieldStyle={{ height: ScreenHeight / 16 }}
                 />
                 <TextInput
@@ -172,25 +183,25 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                   onChangeText={handleChange('description')}
                   onBlur={handleBlur('description')}
                   value={values.description}
-                  style={{ marginBottom: 20 }}
+                  style={{ marginBottom: ScreenHeight * 0.01 }}
                   inputFieldStyle={{ height: ScreenHeight / 8 }}
                 />
                 <SmallText>
-                  Importance de l'activité?
+                  Type d'activité
                 </SmallText>
                 <View
                   style={{zIndex: 10}}
                 >
                   <DropDownPicker
                     placeholder=''
-                    open={openLvl}
-                    value={valueLvl}
-                    items={itemsLvl}
-                    setOpen={setOpenLvl}
-                    setValue={setValueLvl}
-                    setItems={setItemsLvl}
+                    open={openType}
+                    value={valueType}
+                    items={itemsType}
+                    setOpen={setOpenType}
+                    setValue={setValueType}
+                    setItems={setItemsType}
                     listMode='MODAL'
-                    modalTitle='Choisissez le département concerné.'
+                    modalTitle="Choisissez le type d'activité."
                     modalContentContainerStyle={{ backgroundColor: colors.whiteGreen }}
                     modalAnimationType='slide'
                     style={{
@@ -205,7 +216,36 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                   />
                 </View>
                 <SmallText>
-                  Emplacement?
+                  Importance de l'activité
+                </SmallText>
+                <View
+                  style={{zIndex: 10}}
+                >
+                  <DropDownPicker
+                    placeholder=''
+                    open={openLvl}
+                    value={valueLvl}
+                    items={itemsLvl}
+                    setOpen={setOpenLvl}
+                    setValue={setValueLvl}
+                    setItems={setItemsLvl}
+                    listMode='MODAL'
+                    modalTitle="Choisissez le niveau d'importance de l'activité."
+                    modalContentContainerStyle={{ backgroundColor: colors.whiteGreen }}
+                    modalAnimationType='slide'
+                    style={{
+                      backgroundColor: colors.white,
+                      borderColor: colors.lightGreen,
+                      borderWidth: 2
+                    }}
+                    textStyle={{
+                      color: colors.darkGreen,
+                      fontSize: 18
+                    }}
+                  />
+                </View>
+                <SmallText>
+                  Emplacement
                 </SmallText>
                 <View
                   style={{zIndex: 10}}
@@ -234,7 +274,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                   />
                 </View>
                 <SmallText>
-                  Système concerné?
+                  Système concerné
                 </SmallText>
                 <View
                   style={{zIndex: 10}}
@@ -263,7 +303,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                   />
                 </View>
                 <SmallText>
-                  Département concerné?
+                  Département concerné
                 </SmallText>
                 <View
                   style={{zIndex: 10}}
@@ -292,7 +332,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                   />
                 </View>
                 <SmallText>
-                  Quelle journée?
+                  Quelle journée
                 </SmallText>
                 <SelectDateButton
                   onPress={() => setShowDateModal(true)}
@@ -307,7 +347,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                   setDate={setDate}
                 />
                 <SmallText>
-                  À quelle heure?
+                  À quelle heure
                 </SmallText>
                 <SelectTimeButton
                   onPress={() => setShowTimeModal(true)}
@@ -322,7 +362,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                   setTime={setDate}
                 />
                 <MessageBox
-                  textStyle={{ marginBottom: 20 }}
+                  textStyle={{ marginBottom: ScreenHeight * 0.01 }}
                 >
                   { message || ' ' }
                 </MessageBox>
@@ -349,7 +389,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
               modalVisible={modalVisible}
               type={modalMessageType}
               buttonText={modalButtonText}
-              buttonHandler={() => setModalVisible(false)}
+              buttonHandler={() => navigation.navigate('Dashboard')}
             />
         </View>
       </KeyboardAvoidingContainer>

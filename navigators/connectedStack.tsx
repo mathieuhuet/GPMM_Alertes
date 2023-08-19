@@ -9,6 +9,9 @@ import Create from '../screens/create';
 import ListSites from '../screens/List/listSites';
 import SiteActivity from '../screens/activity/siteActivity';
 import ActivityDetails from '../screens/activity/activityDetails';
+import AcquitGeneral from '../screens/acquit/acquitGeneral';
+import AcquitIntervention from '../screens/acquit/acquitIntervention';
+import AcquitRoutine from '../screens/acquit/acquitRoutine';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +50,18 @@ const ConnectedStack: FunctionComponent = (props) => {
         <Stack.Screen
           name='ActivityDetails'
           component={ActivityDetails}
+        />
+        <Stack.Screen
+          name='AcquitIntervention'
+          component={AcquitIntervention}
+        />
+        <Stack.Screen
+          name='AcquitRoutine'
+          component={AcquitRoutine}
+        />
+        <Stack.Screen
+          name='AcquitGeneral'
+          component={AcquitGeneral}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -13,11 +13,12 @@ import RegularButton from '../buttons/regularButton';
 import RegularText from '../texts/regularText';
 import RoundIconButton from '../buttons/roundIconButton';
 import ConfirmModal from '../modals/confirmModal';
+import UserContainer from './userContainer';
 
 
 const StyledView = styled.View`
   width: ${ScreenWidth * 0.9}px;
-  background-color: ${colors.lightGreen};
+  background-color: ${colors.whiteGreen};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,36 +41,14 @@ interface result {
 
 
 const CommentContainer: FunctionComponent<Props> = (props) => {
-  const [policeColor, setPoliceColor] = useState('');
-  const [backgroundColor, setBackgroundColor] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [isLoaded, setIsLoaded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-
-  //fetch comments
-  useEffect(() => {
-    const getComments = async () => {
-      try {
-        const result = await getOtherUserInfo({userId: props.creator}, props.accessToken) as result;
-        setFirstName(result.data.firstName);
-        setLastName(result.data.lastName);
-        setBackgroundColor(result.data.profileIconBackgroundColor);
-        setPoliceColor(result.data.profileIconColor);
-        setIsLoaded(true);
-      } catch (error) {
-        console.log(error);
-        setIsLoaded(true);
-      }
-    }
-    getComments();
-  }, [props.creator]);
 
   const reportComm = async () => {
     try {
       const result = await reportComment({commentId: props.commentId}, props.accessToken);
       setModalVisible(false);
     } catch (error) {
+      setModalVisible(false);
       console.log(error);
     }
   }
@@ -78,26 +57,13 @@ const CommentContainer: FunctionComponent<Props> = (props) => {
     <StyledView
       style={[{}, props.style]}
     >
-      {isLoaded && 
       <View
         style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}
       >
-        <View
-          style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginBottom: ScreenWidth * 0.02}}
-        >
-          <ProfileIcon
-            backgroundColor={backgroundColor}
-            color={policeColor}
-            firstName={firstName}
-            lastName={lastName}
-            size={4}
+          <UserContainer
+            userId={props.creator}
+            accessToken={props.accessToken}
           />
-          <SmallText
-            textStyle={{marginLeft: ScreenWidth * 0.02, color: colors.darkGreen}}
-          >
-            {firstName} {lastName}
-          </SmallText>
-        </View>
           <MaterialIcons
             name='report'
             onPress={() => setModalVisible(true)}
@@ -105,7 +71,6 @@ const CommentContainer: FunctionComponent<Props> = (props) => {
             size={ScreenWidth * 0.06}
           />
       </View>
-      }
       <RegularText
         textStyle={{color: colors.darkGreen}}
       >
