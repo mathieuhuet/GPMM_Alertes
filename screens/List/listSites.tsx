@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect, useContext } from 'react
 import { ActivityIndicator, ScrollView, View, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import { fetchSites } from '../../services/siteServices/fetchSites';
+import { site } from '../../utils/interface/siteInterface';
 
 
 // Custom components
@@ -21,7 +22,8 @@ const Background = styled.Image`
   bottom: -1px;
 `;
 
-const ListSites: FunctionComponent = ({navigation}) => {
+
+const ListSites: FunctionComponent = ({navigation}: any) => {
   const user = useContext(UserContext);
   const [sites, setSites] = useState([]);
   const [siteLoaded, setSiteLoaded] = useState(false);
@@ -29,7 +31,7 @@ const ListSites: FunctionComponent = ({navigation}) => {
   useEffect(() => {
     const getBets = async () => {
       try {
-        const result = await fetchSites(user.accessToken);
+        const result = await fetchSites(user.accessToken) as any;
         setSites(result.data);
         setSiteLoaded(true);
       } catch (error) {
@@ -54,7 +56,7 @@ const ListSites: FunctionComponent = ({navigation}) => {
             showsVerticalScrollIndicator={false}
             style={{backgroundColor: colors.whiteGreen}}
           >
-            {sites.map((site) => 
+            {sites.map((site: site) => 
               <StyledView
                 style={{backgroundColor: colors.white, width: '90%', padding: 10, borderRadius: 10, alignSelf: 'center', marginTop: 10}}
                 key={site._id.toString()}

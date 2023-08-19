@@ -18,7 +18,7 @@ const IconBackground = styled.View`
 
 
 interface Props {
-  name: string;
+  children: React.ReactNode;
   color?: string;
   style?: StyleProp<TextStyle>;
 }
@@ -26,11 +26,7 @@ interface Props {
 const IconHeader: FunctionComponent<Props> = (props) => {
   return (
     <IconBackground style={props.style}>
-      <MaterialCommunityIcons 
-        name={props.name}
-        size={ScreenHeight * 0.08}
-        color={props.color ? props.color : colors.lightGray}
-      />
+      {props.children}
     </IconBackground>
   );
 }

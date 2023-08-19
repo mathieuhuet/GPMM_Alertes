@@ -33,7 +33,7 @@ const App: FunctionComponent = () => {
       console.log(err, 'APP 1');
     }).finally(() => {
       if (accessToken) {
-        getUserInfo(accessToken).then((result) => {
+        getUserInfo(accessToken).then((result: any) => {
           dispatch({ type: 'SET_CREDENTIALS', 
           payload: {
             firstName: result.data.firstName, 

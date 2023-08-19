@@ -22,7 +22,7 @@ const StyledView = styled.View`
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
-  margin-top: ${ScreenHeight * 0.02};
+  margin-top: ${ScreenHeight * 0.02}px;
   padding: ${ScreenWidth * 0.04}px;
 `;
 
@@ -32,6 +32,10 @@ interface Props {
   creator: string,
   accessToken: string,
   style?: StyleProp<ViewStyle>;
+}
+
+interface result {
+  data: any;
 }
 
 
@@ -47,7 +51,7 @@ const CommentContainer: FunctionComponent<Props> = (props) => {
   useEffect(() => {
     const getComments = async () => {
       try {
-        const result = await getOtherUserInfo({userId: props.creator}, props.accessToken);
+        const result = await getOtherUserInfo({userId: props.creator}, props.accessToken) as result;
         setFirstName(result.data.firstName);
         setLastName(result.data.lastName);
         setBackgroundColor(result.data.profileIconBackgroundColor);

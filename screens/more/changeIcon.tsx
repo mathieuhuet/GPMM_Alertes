@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { View } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 // Custom components
@@ -22,7 +23,7 @@ import IconButton from '../../components/buttons/iconButton';
 
 
 
-const ChangeIcon: FunctionComponent = ({navigation}) => {
+const ChangeIcon: FunctionComponent = ({navigation}: any) => {
   const dispatch = useContext(UserDispatchContext);
   const user = useContext(UserContext);
 
@@ -49,9 +50,9 @@ const ChangeIcon: FunctionComponent = ({navigation}) => {
     setModalVisible(true);
   }
 
-  const handleChangeIcon = async (credentials, setSubmitting) => {
+  const handleChangeIcon = async (credentials: any, setSubmitting: any) => {
     // call backend and move to next page if successful
-    changeIcon(credentials, user.accessToken).then(result => {
+    changeIcon(credentials, user.accessToken).then((result: any) => {
       setSubmitting(false);
       if (result.data) {
         dispatch({ type: 'SET_PROFILEICON', payload: {
@@ -70,7 +71,7 @@ const ChangeIcon: FunctionComponent = ({navigation}) => {
 
 
   return (
-    <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0, backgroundColor: colors.tertiary}} >
+    <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0}} >
       <MainContainer style={{backgroundColor: 'transparent'}}>
         <Formik
           initialValues={{
@@ -98,23 +99,22 @@ const ChangeIcon: FunctionComponent = ({navigation}) => {
                   Change Icon
                 </LargeText>
                 {isSubmitting && <IconButton
-                  style={{marginTop: 10, backgroundColor: colors.lightGray}}
-                  size={8}
-                  name='check-bold'
-                  color={colors.darkGreen}
+                  style={{marginTop: 10, backgroundColor: colors.lightGray, height: ScreenHeight * (8 / 100), width: ScreenHeight * (8 / 100)}}
                 >
                   <ActivityIndicator
-                    size="small"
+                    size="large"
                     color={colors.darkGreen}
                   />
                 </IconButton>}
                 {!isSubmitting && <IconButton
                   onPress={handleSubmit}
-                  style={{marginTop: 10, backgroundColor: colors.lightGreen}}
-                  size={8}
-                  name='check-bold'
-                  color={colors.darkGreen}
+                  style={{marginTop: 10, backgroundColor: colors.lightGreen, height: ScreenHeight * (8 / 100), width: ScreenHeight * (8 / 100)}}
                 >
+                  <MaterialCommunityIcons
+                    name= 'check-bold'
+                    size={ScreenHeight * (8 / 200)}
+                    color={colors.darkGreen}
+                  />
                 </IconButton>}
               </View>
               <ProfileIcon

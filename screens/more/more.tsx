@@ -29,12 +29,12 @@ async function saveAccessToken(value: string) {
   await SecureStore.setItemAsync('accessToken', value);
 }
 
-const More: FunctionComponent = ({navigation}) => {
+const More: FunctionComponent = ({navigation}: any) => {
   const dispatch = useContext(UserDispatchContext);
   const user = useContext(UserContext);
 
   const logout = () => {
-    logoutUser(user.accessToken).then(result => {
+    logoutUser(user.accessToken).then((result: any) => {
       if (result.data) {
         saveAccessToken('');
         dispatch({ type: 'SET_CREDENTIALS', 

@@ -23,7 +23,6 @@ const ButtonView = styled.TouchableOpacity`
 
 interface Props {
   children?: React.ReactNode;
-  name?: string;
   onPress?: any;
   size: any;
   color?: string;
@@ -34,30 +33,19 @@ interface Props {
 const RoundIconButton: FunctionComponent<Props> = (props) => {
 
   const buttonSize = ScreenHeight * (props.size / 100);
-  const iconSize = ScreenHeight * (props.size / 200);
 
   return (
     <>
       {props.disabled &&       
       <ButtonView style={props.style}>
-        {props.children ? props.children : 
-        <MaterialCommunityIcons 
-          name={props.name}
-          size={iconSize}
-          color={props.color ? props.color : colors.darkGreen}
-        />}
+        {props.children}
       </ButtonView>}
       {!props.disabled && 
       <ButtonView 
         style={[props.style, {height: buttonSize, width: buttonSize, borderRadius: buttonSize / 2}]} 
         onPress={props.onPress}
       >
-        {props.children ? props.children : 
-        <MaterialCommunityIcons 
-          name={props.name}
-          size={iconSize}
-          color={props.color ? props.color : colors.darkGreen}
-        />}
+        {props.children}
       </ButtonView>}
     </>
   );

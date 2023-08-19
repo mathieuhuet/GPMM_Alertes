@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useContext, useState } from 'react';
 import { View, ActivityIndicator, Pressable } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 import { UserContext, UserDispatchContext } from '../context/user/userContext';
 import * as SecureStore from 'expo-secure-store';
@@ -18,7 +19,7 @@ import DashboardMenuModal from '../components/modals/dashboardMenuModal';
 
 
 
-const Dashboard: FunctionComponent = ({navigation}) => {
+const Dashboard: FunctionComponent = ({navigation}: any) => {
   const user = useContext(UserContext);
   const dispatch = useContext(UserDispatchContext);
 
@@ -44,17 +45,26 @@ const Dashboard: FunctionComponent = ({navigation}) => {
             style={{zIndex: 3, display: 'flex', flexDirection: "row", justifyContent: 'space-between', marginTop: ScreenHeight / 8, marginRight: ScreenHeight / 24, marginLeft: ScreenHeight / 24}}
           >            
             <IconButton
-              name='menu'
-              size={8}
-              style={{backgroundColor: colors.darkGreen}}
+              style={{backgroundColor: colors.darkGreen, height: ScreenHeight * (8 / 100), width: ScreenHeight * (8 / 100)}}
               onPress={() => setModalVisible(true)}
               color={colors.white}
-            />
+            >
+              <MaterialCommunityIcons
+                name= 'menu'
+                size={ScreenHeight * (8 / 200)}
+                color={colors.neonGreen}
+              />
+            </IconButton>
             <RoundIconButton
-              name='plus'
               size={8}
               onPress={() => navigation.navigate('Create')}
-            />
+            >
+              <MaterialCommunityIcons
+                name='plus'
+                size={ScreenHeight * (8 / 200)}
+                color={colors.darkGreen}
+              />
+            </RoundIconButton>
           </View>
           <View
             style={{marginTop: -ScreenHeight / 4, zIndex: 2}}

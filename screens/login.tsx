@@ -22,26 +22,30 @@ const Image = styled.Image`
   height: ${ScreenHeight * 0.2}px;
 `;
 
+interface result {
+  data: any;
+}
 
-const Login: FunctionComponent = ({ navigation }) => {
+const Login: FunctionComponent = ({ navigation }: any) => {
   const [message, setMessage] = useState('');
 
-  const handleLogin = (credentials, setSubmitting) => {
+  const handleLogin = async (credentials: any, setSubmitting: any) => {
     setMessage('');
     // call backend and move to next page if successful
-    loginEmail(credentials).then(result => {
+    try {
+      const result = await loginEmail(credentials) as result;
       if (result.data) {
         const email = result.data;
         navigation.navigate('EmailVerification', email);
       }
       setSubmitting(false);
-    }).catch(err => {
-      if (err.message) {
-        setMessage(err.message);
+    } catch (error: any) {
+      if (error.message) {
+        setMessage(error.message);
       }
-      console.log(err);
+      console.log(error);
       setSubmitting(false);
-    });
+    }
   }
 
   return (

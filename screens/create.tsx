@@ -43,7 +43,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
     {label: '✅ Routine', value: 'routine'},
   ]);
   const [openEmp, setOpenEmp] = useState(false);
-  const [valueEmp, setValueEmp] = useState('');
+  const [valueEmp, setValueEmp] = useState([]);
   const [itemsEmp, setItemsEmp] = useState([
 
   ]);
@@ -117,14 +117,14 @@ const Create: FunctionComponent = ({ navigation }: any) => {
         site: valueSite,
         system: valueSys,
       }
-      const result = await postActivity(activity, user.accessToken)
+      const result = await postActivity(activity, user.accessToken) as any;
       setSubmitting(false);
       if (result.data) {
         console.log(result.data);
         return showModal('success', 'Beau travail', result.message, 'OK');
       }
       return showModal('failed', 'Oupsi', result.message, 'OK');
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
       setSubmitting(false);
       return showModal('failed', 'Oupsi', err.message, 'OK');

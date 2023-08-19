@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect, useContext } from 'react
 import { ActivityIndicator, View, Platform, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { fetchActivitiesBySite } from '../../services/activityServices/fetchActivitiesBySite';
+import { activity } from '../../utils/interface/activityInterface';
 
 // Custom components
 import MainContainer from '../../components/containers/mainContainer';
@@ -33,7 +34,7 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
   useEffect(() => {
     const getActivities = async () => {
       try {
-        const result = await fetchActivitiesBySite(user.accessToken, site);
+        const result = await fetchActivitiesBySite(user.accessToken, site) as any;
         setActivities(result.data);
         setActivityLoaded(true);
       } catch (error) {
@@ -101,7 +102,7 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
             <View
               style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
             >
-              {activities.map((activity) => 
+              {activities.map((activity: activity) => 
                 <View
                   key={activity._id.toString()}
                   style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
@@ -145,7 +146,7 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
             <View
               style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
             >
-              {activities.map((activity) => 
+              {activities.map((activity: activity) => 
                 <View
                   key={activity._id.toString()}
                   style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
@@ -189,7 +190,7 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
             <View
               style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
             >
-              {activities.map((activity) => 
+              {activities.map((activity: activity) => 
                 <View
                   key={activity._id.toString()}
                   style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}

@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { KeyboardAvoidingView, Keyboard, ScrollView, Pressable, Platform, View } from 'react-native';
-import PressableText from '../texts/pressableText';
 
 
 interface Props {

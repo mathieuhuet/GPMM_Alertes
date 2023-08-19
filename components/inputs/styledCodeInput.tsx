@@ -71,7 +71,7 @@ const StyledCodeInput: FunctionComponent<Props> = (props) => {
     textInputRef?.current?.focus();
   } 
 
-  const ToCodeDigitInput = (value, index:number) => {
+  const ToCodeDigitInput = (value: any, index:number) => {
     const emptyInputChar = ' ';
     const digit = props.code[index] || emptyInputChar;
     const isCurrentDigit = index === props.code.length;

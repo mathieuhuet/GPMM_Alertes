@@ -23,10 +23,8 @@ const ButtonView = styled.TouchableOpacity`
 `;
 
 interface Props {
-  children?: React.ReactNode;
-  name: string;
+  children: React.ReactNode;
   onPress?: any;
-  size: any;
   color?: string;
   style?: StyleProp<TextStyle>;
   disabled?: boolean;
@@ -34,31 +32,20 @@ interface Props {
 
 const IconButton: FunctionComponent<Props> = (props) => {
 
-  const buttonSize = ScreenHeight * (props.size / 100);
-  const iconSize = ScreenHeight * (props.size / 200);
+
 
   return (
     <>
       {props.disabled &&       
       <ButtonView style={props.style}>
-        {props.children ? props.children : 
-        <MaterialCommunityIcons 
-          name={props.name}
-          size={iconSize}
-          color={props.color ? props.color : colors.darkGreen}
-        />}
+        {props.children}
       </ButtonView>}
       {!props.disabled && 
       <ButtonView 
-        style={[props.style, {height: buttonSize, width: buttonSize}]} 
+        style={[props.style]} 
         onPress={props.onPress}
       >
-        {props.children ? props.children : 
-        <MaterialCommunityIcons 
-          name={props.name}
-          size={iconSize}
-          color={props.color ? props.color : colors.darkGreen}
-        />}
+        {props.children}
       </ButtonView>}
     </>
   );

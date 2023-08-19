@@ -6,6 +6,7 @@ import { deleteActivity } from '../../services/activityServices/deleteActivity';
 import { getLevelOptions } from '../../components/levelOptions';
 import { getDepartmentOptions } from '../../components/departmentOptions';
 import { fetchComments } from '../../services/activityServices/fetchComments';
+import { comment } from '../../utils/interface/commentInterface';
 
 
 // Custom components
@@ -21,7 +22,6 @@ import DeleteActivityModal from '../../components/modals/deleteActivityModal';
 import CommentModal from '../../components/modals/commentModal';
 import RoundIconButton from '../../components/buttons/roundIconButton';
 import CommentContainer from '../../components/containers/commentContainer';
-
 
 
 const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
@@ -40,7 +40,7 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
   useEffect(() => {
     const getComments = async () => {
       try {
-        const result = await fetchComments(user.accessToken, {activityId: activity._id});
+        const result = await fetchComments(user.accessToken, {activityId: activity._id}) as any;
         setComments(result.data);
         setCommentsLoaded(true);
       } catch (error) {
@@ -54,7 +54,7 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
 
   const deleteActivityPress = async () => {
     try {
-      const result = await deleteActivity({_id: activity._id}, user.accessToken);
+      const result = await deleteActivity({_id: activity._id}, user.accessToken) as any;
       if (result.data) {
         closeDeleteModal();
         navigation.navigate('Dashboard');
@@ -167,9 +167,9 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
           {focusTab === 'comments' && 
             <ScrollView
               style={{display: 'flex', flexDirection: 'column', width: '100%', height: '80%'}}
-              contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+              contentContainerStyle={{justifyContent: 'center', alignItems: 'center', paddingBottom: 400}}
             >
-              {comments.map((comment) => 
+              {comments.map((comment: comment) => 
                 <View
                   key={comment._id.toString()}
                 >

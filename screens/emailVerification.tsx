@@ -4,6 +4,8 @@ import * as SecureStore from 'expo-secure-store';
 import { loginEmail } from '../services/userServices/login';
 import { verifyUser } from '../services/userServices/verifyLoginCode';
 import { getUserInfo } from '../services/userServices/getUserInfo';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ScreenHeight } from '../components/shared';
 // Custom components
 import MainContainer from '../components/containers/mainContainer';
 import KeyboardAvoidingContainer from '../components/containers/keyboardAvoidingContainer';
@@ -32,7 +34,7 @@ const getAccessToken: () => Promise<string> = async () => {
 }
 
 
-const EmailVerification: FunctionComponent = ({ navigation, route }) => {
+const EmailVerification: FunctionComponent = ({ navigation, route }: any) => {
   const dispatch = useContext(UserDispatchContext);
 
 
@@ -76,12 +78,12 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
   const handleEmailVerification = () => {
     setVerifying(true);
     // call backend
-    verifyUser({loginCode: code, email: email}).then(result => {
+    verifyUser({loginCode: code, email: email}).then((result: any) => {
       setVerifying(false);
       if (result.data) {
         saveAccessToken(result.data.token).then((accessToken) => {
           if (accessToken) {
-            getUserInfo(accessToken).then((result) => {
+            getUserInfo(accessToken).then((result: any) => {
               dispatch({ type: 'SET_CREDENTIALS', 
               payload: {
                 firstName: result.data.firstName, 
@@ -108,7 +110,7 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
 
 
   const resendEmail = () => {
-    loginEmail({email: email}).then(result => {
+    loginEmail({email: email}).then((result: any) => {
       if (result.data) {
         const email = result.data;
         navigation.navigate('EmailVerification', email);
@@ -120,9 +122,15 @@ const EmailVerification: FunctionComponent = ({ navigation, route }) => {
   return (
     <MainContainer>
       <KeyboardAvoidingContainer>
-        <IconHeader 
-          name="lock"
-        />
+        <IconHeader
+          style={{backgroundColor: colors.whiteGreen}}
+        >
+          <MaterialCommunityIcons
+            name= 'lock'
+            size={ScreenHeight * 0.08}
+            color={colors.lightGray}
+          />
+        </IconHeader>
         <RegularText textStyle={{marginTop: 20, textAlign: 'center'}}>
           Un email avec un code de connection a été envoyé à :
         </RegularText>
