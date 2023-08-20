@@ -41,7 +41,10 @@ const App: FunctionComponent = () => {
             email: result.data.email,
             profileIconColor: result.data.profileIconColor, 
             profileIconBackgroundColor: result.data.profileIconBackgroundColor,
-            _id: result.data._id
+            _id: result.data._id,
+            role: result.data.role,
+            departement: result.data.departement,
+            admin: result.data.admin
           }});
         }).catch((err) => {
           console.log(err, 'APP 2');

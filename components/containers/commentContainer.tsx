@@ -1,17 +1,12 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { StyleProp, ViewStyle, View } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
-import { getOtherUserInfo } from '../../services/userServices/getOtherUserInfo';
 import { reportComment } from '../../services/activityServices/reportComment';
 // Styled components
 import styled from 'styled-components/native';
 import { ScreenHeight, ScreenWidth } from '../shared';
 import { colors } from '../colors';
-import ProfileIcon from '../icons/profileIcon';
-import SmallText from '../texts/smallText';
-import RegularButton from '../buttons/regularButton';
 import RegularText from '../texts/regularText';
-import RoundIconButton from '../buttons/roundIconButton';
 import ConfirmModal from '../modals/confirmModal';
 import UserContainer from './userContainer';
 
@@ -32,11 +27,8 @@ interface Props {
   commentId: any,
   creator: string,
   accessToken: string,
+  ownComment: boolean,
   style?: StyleProp<ViewStyle>;
-}
-
-interface result {
-  data: any;
 }
 
 
@@ -64,12 +56,14 @@ const CommentContainer: FunctionComponent<Props> = (props) => {
             userId={props.creator}
             accessToken={props.accessToken}
           />
-          <MaterialIcons
-            name='report'
-            onPress={() => setModalVisible(true)}
-            color={colors.failure}
-            size={ScreenWidth * 0.06}
-          />
+          {!props.ownComment &&
+            <MaterialIcons
+              name='report'
+              onPress={() => setModalVisible(true)}
+              color={colors.failure}
+              size={ScreenWidth * 0.06}
+            />
+          }
       </View>
       <RegularText
         textStyle={{color: colors.darkGreen}}

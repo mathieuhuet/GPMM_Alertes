@@ -48,7 +48,7 @@ const ListSites: FunctionComponent = ({navigation}: any) => {
         style={{backgroundColor: colors.darkGreen, paddingBottom: 20}}
       >
         <LargeText textStyle={{marginBottom: 25, fontWeight: 'bold', color: colors.whiteGreen, paddingTop: 60, paddingLeft: 20}}>
-          Sites
+          Tout Les Sites
         </LargeText>
       </View>
       {siteLoaded ?

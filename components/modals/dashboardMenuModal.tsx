@@ -22,6 +22,7 @@ interface Props {
   modalVisible: boolean;
   navigateMore: any;
   navigateList: any;
+  navigateAll: any;
 }
 
 const DashboardMenuModal: FunctionComponent<Props> = (props) => {
@@ -35,15 +36,23 @@ const DashboardMenuModal: FunctionComponent<Props> = (props) => {
         onPress={props.closeModal}
       >
         <View
-          style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', width: '100%', height: '40%'}}
+          style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', width: '100%', height: '50%'}}
         >
+          <RegularButton
+            style={{backgroundColor: colors.darkGreen}}
+            onPress={props.navigateAll}
+            textStyle={{fontSize: 20, color: colors.whiteGreen}}
+          >
+            <Ionicons name="list-outline" size={24} color={colors.whiteGreen} />
+            Toutes les activitées
+          </RegularButton>
           <RegularButton
             style={{backgroundColor: colors.darkGreen}}
             onPress={props.navigateList}
             textStyle={{fontSize: 20, color: colors.whiteGreen}}
           >
             <Ionicons name="list-outline" size={24} color={colors.whiteGreen} />
-            Liste
+            Liste de tout les sites
           </RegularButton>
           <RegularButton
             style={{backgroundColor: colors.darkGreen}}

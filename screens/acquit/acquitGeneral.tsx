@@ -43,6 +43,7 @@ const AcquitGeneral: FunctionComponent = ({ navigation, route }: any) => {
       const acquit = {
         ...credentials,
         creator: user._id,
+        activityId: activity._id,
         dateCreated: new Date(),
       }
       const result = await postGeneralAcquit(acquit, user.accessToken) as any;
@@ -77,7 +78,7 @@ const AcquitGeneral: FunctionComponent = ({ navigation, route }: any) => {
                 setMessage('Veuillez remplir tout les champs.');
                 setSubmitting(false);
               } else {
-                handleNewAcquit({title: values.comments}, setSubmitting);
+                handleNewAcquit({comments: values.comments}, setSubmitting);
               }
             }}
           >

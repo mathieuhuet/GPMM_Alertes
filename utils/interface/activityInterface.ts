@@ -1,6 +1,6 @@
 export interface activity {
   _id: any;
-  acquiter: boolean;
+  acquit: boolean;
   type: string;
   title: string;
   level: string;

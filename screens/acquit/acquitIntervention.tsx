@@ -43,6 +43,7 @@ const AcquitIntervention: FunctionComponent = ({ navigation, route }: any) => {
       const acquit = {
         ...credentials,
         creator: user._id,
+        activityId: activity._id,
         dateCreated: new Date(),
       }
       const result = await postInterventionAcquit(acquit, user.accessToken) as any;
@@ -77,7 +78,7 @@ const AcquitIntervention: FunctionComponent = ({ navigation, route }: any) => {
                 setMessage('Veuillez remplir tout les champs.');
                 setSubmitting(false);
               } else {
-                handleNewAcquit({title: values.context, description: values.equipment, equipment: values.equipment, result: values.result, observation: values.observation}, setSubmitting);
+                handleNewAcquit({context: values.context, equipment: values.equipment, description: values.description, result: values.result, observation: values.observation}, setSubmitting);
               }
             }}
           >

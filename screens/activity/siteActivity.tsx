@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect, useContext } from 'react';
-import { ActivityIndicator, View, Platform, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, View, Platform, TouchableOpacity, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { fetchActivitiesBySite } from '../../services/activityServices/fetchActivitiesBySite';
 import { activity } from '../../utils/interface/activityInterface';
@@ -17,12 +17,6 @@ import RegularButton from '../../components/buttons/regularButton';
 
 
 
-const Background = styled.Image`
-  width: 100%;
-  height: ${ScreenHeight * 0.6}px;
-  position: absolute;
-  bottom: -1px;
-`;
 
 const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
   const user = useContext(UserContext);
@@ -63,7 +57,7 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
         </RegularText>
       </View>
       <View
-        style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20}}
+        style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}
       >
         <TouchableOpacity
           style={[{flex: 1, height: ScreenHeight * 0.05, justifyContent: 'center', borderBottomWidth: 2, borderColor: colors.lightGreen}, focusTab === 'past' ? {backgroundColor: colors.white} : {backgroundColor: colors.lightGreen}]}
@@ -99,15 +93,16 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
       {activityLoaded ?
         <>
           {focusTab === 'past' && 
-            <View
-              style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
+            <ScrollView
+              style={{display: 'flex', flexDirection: 'column', width: '100%'}}
+              contentContainerStyle={{alignItems: 'center', justifyContent: 'center', paddingTop: 10, paddingBottom: 200}}
             >
               {activities.map((activity: activity) => 
                 <View
                   key={activity._id.toString()}
                   style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
                 >
-                {activity.acquiter &&
+                {activity.acquit &&
                   <StyledView
                   style={{backgroundColor: colors.white, width: '90%', marginBottom: 10, padding: 10, borderRadius: 10}}
                   onPress={() => navigation.navigate('ActivityDetails', activity)}
@@ -140,18 +135,19 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
                 }
                 </View>
               )}
-            </View>
+            </ScrollView>
           }
           {focusTab === 'now' && 
-            <View
-              style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
+            <ScrollView
+              style={{display: 'flex', flexDirection: 'column', width: '100%'}}
+              contentContainerStyle={{alignItems: 'center', justifyContent: 'center', paddingTop: 10, paddingBottom: 200}}
             >
               {activities.map((activity: activity) => 
                 <View
                   key={activity._id.toString()}
                   style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
                 >
-                {new Date(activity.activityDate) < new Date() && !activity.acquiter &&
+                {new Date(activity.activityDate) < new Date() && !activity.acquit &&
                   <StyledView
                   style={{backgroundColor: colors.darkGreen, width: '90%', marginBottom: 10, padding: 10, borderRadius: 10}}
                   onPress={() => navigation.navigate('ActivityDetails', activity)}
@@ -184,18 +180,19 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
                 }
                 </View>
               )}
-            </View>
+            </ScrollView>
           }
           {focusTab === 'futur' && 
-            <View
-              style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '100%', alignItems: 'center'}}
+            <ScrollView
+              style={{display: 'flex', flexDirection: 'column', width: '100%'}}
+              contentContainerStyle={{alignItems: 'center', justifyContent: 'center', paddingTop: 10, paddingBottom: 200}}
             >
               {activities.map((activity: activity) => 
                 <View
                   key={activity._id.toString()}
                   style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
                 >
-                {new Date(activity.activityDate) > new Date() && !activity.acquiter &&
+                {new Date(activity.activityDate) > new Date() && !activity.acquit &&
                   <StyledView
                   style={{backgroundColor: colors.white, width: '90%', marginBottom: 10, padding: 10, borderRadius: 10}}
                   key={activity._id.toString()}
@@ -229,7 +226,7 @@ const SiteActivity: FunctionComponent = ({navigation, route}: any) => {
                 }
                 </View>
               )}
-            </View>
+            </ScrollView>
           }
         </>
         :

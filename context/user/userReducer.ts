@@ -5,7 +5,10 @@ export const initialUser = {
   profileIconColor: '',
   profileIconBackgroundColor: '',
   _id: '',
-  accessToken: ''
+  accessToken: '',
+  role: '',
+  departement: '',
+  admin: false
 }
 
 
@@ -45,7 +48,10 @@ export const userReducer = (user: any, action: any) => {
         profileIconColor: action.payload.profileIconColor,
         profileIconBackgroundColor: action.payload.profileIconBackgroundColor,
         email: action.payload.email,
-        _id: action.payload._id
+        _id: action.payload._id,
+        role: action.payload.role,
+        departement: action.payload.departement,
+        admin: action.payload.admin
       }
     }
     default: {

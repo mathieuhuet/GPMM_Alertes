@@ -212,7 +212,7 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
           }
           {focusTab === 'acquiter' && 
             <>
-            {activity.acquiter ?
+            {activity.acquit ?
               <View>
 
               </View>
@@ -254,6 +254,13 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
               style={{display: 'flex', flexDirection: 'column', width: '100%', height: '80%'}}
               contentContainerStyle={{justifyContent: 'center', alignItems: 'center', paddingBottom: 400}}
             >
+              {!comments.length &&
+                <RegularText
+                  style={{marginTop: ScreenHeight * 0.02}}
+                >
+                  Aucun commentaires.
+                </RegularText>
+              }
               {comments.map((comment: comment) => 
                 <View
                   key={comment._id.toString()}
@@ -263,12 +270,13 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
                     commentId={comment._id}
                     creator={comment.creator}
                     accessToken={user.accessToken}
+                    ownComment={comment.creator === user._id}
                   />
                 </View>
               )}
             </ScrollView>
           }
-          {activity.creator === user._id && 
+          {(activity.creator === user._id || user.admin) && 
             <View
               style={{position: 'absolute', left: ScreenWidth * 0.1, top: ScreenHeight * 0.8}}
             >

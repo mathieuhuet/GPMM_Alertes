@@ -7,7 +7,10 @@ export const UserContext = createContext({
   profileIconColor: '',
   profileIconBackgroundColor: '',
   _id: '',
-  accessToken: ''
+  accessToken: '',
+  role: '',
+  departement: '',
+  admin: false
 });
 export const UserDispatchContext = createContext({
   firstName: '',
@@ -16,5 +19,8 @@ export const UserDispatchContext = createContext({
   profileIconColor: '',
   profileIconBackgroundColor: '',
   _id: '',
-  accessToken: ''
+  accessToken: '',
+  role: '',
+  departement: '',
+  admin: false
 });

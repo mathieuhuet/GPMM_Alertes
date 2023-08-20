@@ -7,6 +7,7 @@ import More from '../screens/more/more';
 import ChangeIcon from '../screens/more/changeIcon';
 import Create from '../screens/create';
 import ListSites from '../screens/List/listSites';
+import AllActivities from '../screens/List/allActivities';
 import SiteActivity from '../screens/activity/siteActivity';
 import ActivityDetails from '../screens/activity/activityDetails';
 import AcquitGeneral from '../screens/acquit/acquitGeneral';
@@ -40,8 +41,12 @@ const ConnectedStack: FunctionComponent = (props) => {
           component={Create}
         />
         <Stack.Screen
-          name='List'
+          name='ListSites'
           component={ListSites}
+        />
+        <Stack.Screen
+          name='AllActivities'
+          component={AllActivities}
         />
         <Stack.Screen
           name='SiteActivity'
