@@ -22,6 +22,7 @@ const App: FunctionComponent = () => {
   const [user, dispatch] = useReducer(userReducer, initialUser);
   const [accessToken, setAccesToken] = useState('');
   useEffect(() => {
+    dispatch({type: 'RELOAD'});
     getAccessToken().then(data => {
       if (!user.accessToken) {
         dispatch({ type: 'SET_ACCESSTOKEN', payload: {accessToken: data}});

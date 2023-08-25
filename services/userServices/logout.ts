@@ -7,7 +7,7 @@ const API = GPMM_USER_API
 
 export const logoutUser = (accessToken: string) => {
   return new Promise((resolve, reject) => {
-    console.log(API);
+    console.log(API, '/logout');
     axios.post(
       `${API}/logout`,
       {data: 'no data'},

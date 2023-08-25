@@ -7,7 +7,7 @@ const API = GPMM_SITE_API
 export const fetchSites = (accessToken: string) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(API);
+      console.log(API, 'fetchSites');
       const response = await axios.get(
         `${API}/fetchSites`, 
         {

@@ -7,7 +7,7 @@ const API = GPMM_ACTIVITY_API
 export const fetchComments = (accessToken: string, activityId: any) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(API);
+      console.log(API, '/fetchComments');
       const response = await axios.post(
         `${API}/fetchComments`,
         activityId,

@@ -6,7 +6,7 @@ const API = GPMM_USER_API
 
 export const changeIcon = (data: any, accessToken: string) => {
   return new Promise((resolve, reject) => {
-    console.log(API);
+    console.log(API, '/changeIcon');
     axios.put(
       `${API}/changeIcon`, 
       data,

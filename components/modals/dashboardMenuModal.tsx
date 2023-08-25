@@ -36,7 +36,17 @@ const DashboardMenuModal: FunctionComponent<Props> = (props) => {
         onPress={props.closeModal}
       >
         <View
-          style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', width: '100%', height: '50%'}}
+          style={{
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'space-evenly', 
+            width: ScreenWidth * 0.9, 
+            height: '50%', 
+            backgroundColor: colors.lightGreen, 
+            padding: ScreenWidth * 0.1,
+            borderRadius: 10,
+            marginTop: 100
+          }}
         >
           <RegularButton
             style={{backgroundColor: colors.darkGreen}}

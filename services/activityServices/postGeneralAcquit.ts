@@ -7,7 +7,7 @@ const API = GPMM_ACTIVITY_API
 export const postGeneralAcquit = (generalAcquit: any, accessToken: string) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(API);
+      console.log(API, '/postGeneralAcquit');
       const response = await axios.post(
         `${API}/postGeneralAcquit`, 
         generalAcquit,

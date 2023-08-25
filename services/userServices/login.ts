@@ -6,7 +6,7 @@ const API = GPMM_USER_API
 
 export const loginEmail = (credentials: any) => {
   return new Promise((resolve, reject) => {
-    console.log(API);
+    console.log(API, '/login');
     axios.post(
       `${API}/login`, 
       credentials,

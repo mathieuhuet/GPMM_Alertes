@@ -6,7 +6,7 @@ const API = GPMM_USER_API
 
 export const getOtherUserInfo = (credentials: any, accessToken: string) => {
   return new Promise((resolve, reject) => {
-    console.log(API);
+    console.log(API, '/getOtherUserInfo');
     axios.post(
       `${API}/getOtherUserInfo`, 
       credentials,

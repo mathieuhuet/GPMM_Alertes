@@ -7,7 +7,7 @@ const API = GPMM_ACTIVITY_API
 export const fetchActivitiesBySite = (accessToken: string, site: any) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(API);
+      console.log(API, '/fetchActivitiesBySite');
       const response = await axios.post(
         `${API}/fetchActivitiesBySite`,
         site,

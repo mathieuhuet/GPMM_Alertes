@@ -48,7 +48,7 @@ export const getProfileColorCode = (color: string): string => {
       return "#f6f6f6"
     }
     default : {
-      return "#fde6bb"
+      throw Error("unknown color");
     }
   }
 }

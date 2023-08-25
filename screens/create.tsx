@@ -1,10 +1,11 @@
-import React, { FunctionComponent, useState, useContext } from 'react';
+import React, { FunctionComponent, useState, useContext, useEffect } from 'react';
 import { View, Platform } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { postActivity } from '../services/activityServices/postActivity';
-import { UserContext } from '../context/user/userContext';
+import { UserContext, UserDispatchContext } from '../context/user/userContext';
+import { fetchUsersByDepartment } from '../services/userServices/fetchUsersByDepartment';
 
 // Custom components
 import MainContainer from '../components/containers/mainContainer';
@@ -23,7 +24,8 @@ import SelectTimeButton from '../components/buttons/selectTimeButton';
 import MessageModal from '../components/modals/messageModal';
 
 const Create: FunctionComponent = ({ navigation }: any) => {
-  const user = useContext(UserContext);
+  const user = useContext(UserContext);  
+  const dispatch = useContext(UserDispatchContext);
   const [message, setMessage] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDateModal, setShowDateModal] = useState(false);
@@ -33,6 +35,11 @@ const Create: FunctionComponent = ({ navigation }: any) => {
   const [itemsDep, setItemsDep] = useState([
     {label: 'Sig&Com', value: 'sig'},
     {label: 'Bâtiments', value: 'bat'},
+    {label: "Agent d'Intervention", value: 'ai'},
+    {label: 'Service à la clientèle', value: 'sc'},
+    {label: 'Sûreté & Contrôle', value: 'sur'},
+    {label: 'Salle de contrôle', value: 'pcc'},
+    {label: 'Administration', value: 'adm'},
   ]);
   const [openType, setOpenType] = useState(false);
   const [valueType, setValueType] = useState(null);
@@ -44,14 +51,13 @@ const Create: FunctionComponent = ({ navigation }: any) => {
   const [openLvl, setOpenLvl] = useState(false);
   const [valueLvl, setValueLvl] = useState(null);
   const [itemsLvl, setItemsLvl] = useState([
-    {label: '‼️ Urgent', value: 'urgent'},
+    {label: '🚨 Urgent', value: 'urgent'},
     {label: '⚠️ Important', value: 'important'},
     {label: '🛂 Mineur', value: 'mineur'},
   ]);
   const [openEmp, setOpenEmp] = useState(false);
   const [valueEmp, setValueEmp] = useState([]);
   const [itemsEmp, setItemsEmp] = useState([
-
   ]);
   const [openSite, setOpenSite] = useState(false);
   const [valueSite, setValueSite] = useState(null);
@@ -87,6 +93,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
   const [modalHeaderText, setModalHeaderText] = useState('');
   const [modalMessage, setModalMessage] = useState('');
   const [modalButtonText, setModalButtonText] = useState('');
+  const [employe, setEmploye] = useState([]);
 
   const showModal = (type:string, headerText:string, message:string, buttonText:string) => {
     setModalMessageType(type);
@@ -129,7 +136,8 @@ const Create: FunctionComponent = ({ navigation }: any) => {
       const result = await postActivity(activity, user.accessToken) as any;
       setSubmitting(false);
       if (result.data) {
-        console.log(result.data);
+        console.log(result.data);    
+        dispatch({type: 'RELOAD'});
         return showModal('success', 'Beau travail', result.message, 'OK');
       }
       return showModal('failed', 'Oupsi', result.message, 'OK');
@@ -139,6 +147,21 @@ const Create: FunctionComponent = ({ navigation }: any) => {
       return showModal('failed', 'Oupsi', err.message, 'OK');
     }
   }
+
+  useEffect(() => {
+    const getEmploye = async () => {
+      if (valueDep) {
+        try {
+          const result = await fetchUsersByDepartment({departement: valueDep}, user.accessToken) as any;
+          setEmploye(result.data);
+          console.log(employe);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+    getEmploye();
+  }, [valueDep])
 
   return (
     <MainContainer
@@ -331,6 +354,39 @@ const Create: FunctionComponent = ({ navigation }: any) => {
                     }}
                   />
                 </View>
+                {valueDep &&
+                <>
+                  <SmallText>
+                    Employé Concerné (Optionel)
+                  </SmallText>
+                  <View
+                    style={{zIndex: 10}}
+                  >
+                    <DropDownPicker
+                      placeholder=''
+                      open={openEmp}
+                      value={valueEmp}
+                      items={itemsEmp}
+                      setOpen={setOpenEmp}
+                      setValue={setValueEmp}
+                      setItems={setItemsEmp}
+                      listMode='MODAL'
+                      modalTitle="Choisissez l'employé concerné."
+                      modalContentContainerStyle={{ backgroundColor: colors.whiteGreen }}
+                      modalAnimationType='slide'
+                      style={{
+                        backgroundColor: colors.white,
+                        borderColor: colors.lightGreen,
+                        borderWidth: 2
+                      }}
+                      textStyle={{
+                        color: colors.darkGreen,
+                        fontSize: 18
+                      }}
+                    />
+                  </View>
+                </>
+                }
                 <SmallText>
                   Quelle journée
                 </SmallText>

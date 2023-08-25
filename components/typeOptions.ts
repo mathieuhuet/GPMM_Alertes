@@ -16,7 +16,7 @@ export const getTypeOptions = (color: string): string => {
       return '🚧 Intervention'
     }
     default : {
-      return "error"
+      throw Error("unknown activity type");
     }
   }
 }

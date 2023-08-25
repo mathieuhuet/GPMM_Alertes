@@ -7,7 +7,7 @@ const API = GPMM_ACTIVITY_API
 export const fetchAcquit = (accessToken: string, activityTypeAndId: any) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(API);
+      console.log(API, '/fetchAcquit');
       const response = await axios.post(
         `${API}/fetchAcquit`,
         activityTypeAndId,

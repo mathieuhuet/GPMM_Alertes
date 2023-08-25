@@ -6,7 +6,7 @@ const API = GPMM_USER_API
 
 export const verifyUser = (data: any) => {
   return new Promise((resolve, reject) => {
-    console.log(API);
+    console.log(API, '/verify');
     axios.post(
       `${API}/verify`, 
       data,

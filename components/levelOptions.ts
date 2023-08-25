@@ -1,5 +1,5 @@
 export const levelOptions = {
-  urgent: '‼️ Urgent',
+  urgent: '🚨 Urgent',
   important: '⚠️ Important',
   mineur: '🛂 Mineur',
 }
@@ -7,7 +7,7 @@ export const levelOptions = {
 export const getLevelOptions = (color: string): string => {
   switch (color) {
     case 'urgent' : {
-      return '‼️ Urgent'
+      return '🚨 Urgent'
     }
     case 'important' : {
       return '⚠️ Important'
@@ -16,7 +16,7 @@ export const getLevelOptions = (color: string): string => {
       return '🛂 Mineur'
     }
     default : {
-      return "error"
+      throw Error("unknown level of activity");
     }
   }
 }

@@ -8,6 +8,7 @@ export const initialUser = {
   accessToken: '',
   role: '',
   departement: '',
+  reload: 0,
   admin: false
 }
 
@@ -25,6 +26,12 @@ export const userReducer = (user: any, action: any) => {
         ...user,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName
+      }
+    }
+    case 'RELOAD': {
+      return {
+        ...user,
+        reload : user.reload + 1
       }
     }
     case 'SET_PROFILEICON': {
