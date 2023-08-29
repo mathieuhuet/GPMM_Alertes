@@ -50,6 +50,18 @@ const App: FunctionComponent = () => {
         }).catch((err) => {
           console.log(err, 'APP 2');
           dispatch({ type: 'SET_ACCESSTOKEN', payload: {accessToken: ''}})
+          dispatch({ type: 'SET_CREDENTIALS', 
+          payload: {
+            firstName: '', 
+            lastName: '',
+            email: '',
+            profileIconColor: '', 
+            profileIconBackgroundColor: '', 
+            _id: '',
+            role: '',
+            department: '',
+            admin: ''
+          }});
         })
       }
     });

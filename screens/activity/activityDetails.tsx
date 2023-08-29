@@ -207,20 +207,17 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
                 style={{paddingTop: ScreenHeight * 0.01, paddingLeft: ScreenHeight * 0.01}}
                 textStyle={{fontWeight: 'bold'}}
               />
-              {activity.employee.length &&
+              {activity.employee &&
                 <>
                   <SmallText>
                     Assigné à
                   </SmallText>
-                  {activity.employee.map((id: any) =>
                     <UserContainer
-                      userId={id}
+                      userId={activity.employee}
                       accessToken={user.accessToken}
                       style={{paddingLeft: ScreenHeight * 0.01, paddingTop: ScreenHeight * 0.01}}
                       textStyle={{fontWeight: 'bold'}}
-                      key={id}
                     />
-                  )}
                 </>
               }
               <SmallText>

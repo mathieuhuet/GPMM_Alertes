@@ -17,13 +17,6 @@ import RegularButton from '../../components/buttons/regularButton';
 import RegularText from '../../components/texts/regularText';
 import PressableText from '../../components/texts/pressableText';
 
-const Background = styled.Image`
-  width: 100%;
-  height: ${ScreenHeight * 0.6}px;
-  position: absolute;
-  bottom: -1px;
-`;
-
 
 async function saveAccessToken(value: string) {
   await SecureStore.setItemAsync('accessToken', value);
@@ -37,6 +30,7 @@ const More: FunctionComponent = ({navigation}: any) => {
     logoutUser(user.accessToken).then((result: any) => {
       if (result.data) {
         saveAccessToken('');
+        dispatch({ type: 'SET_ACCESSTOKEN', payload: {accessToken: ''}});
         dispatch({ type: 'SET_CREDENTIALS', 
         payload: {
           firstName: '', 
@@ -44,11 +38,14 @@ const More: FunctionComponent = ({navigation}: any) => {
           email: '',
           profileIconColor: '', 
           profileIconBackgroundColor: '', 
-          profileIconPolice: '',
+          _id: '',
+          role: '',
+          department: '',
+          admin: ''
         }});
-        dispatch({ type: 'SET_ACCESSTOKEN', payload: {accessToken: ''}});
       }
     }).catch(err => {
+      console.log(err.message, 'MORELOGOUT');
       console.log(err, 'MORE LOGOUT');
       saveAccessToken('');
     });

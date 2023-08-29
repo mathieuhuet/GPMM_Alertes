@@ -57,7 +57,7 @@ const Create: FunctionComponent = ({ navigation }: any) => {
     {label: '🛂 Mineur', value: 'mineur'},
   ]);
   const [openEmp, setOpenEmp] = useState(false);
-  const [valueEmp, setValueEmp] = useState([]);
+  const [valueEmp, setValueEmp] = useState(null);
   const [itemsEmp, setItemsEmp] = useState([
   ]);
   const [openSite, setOpenSite] = useState(false);
@@ -80,6 +80,10 @@ const Create: FunctionComponent = ({ navigation }: any) => {
     {label: 'Portillons', value: 'Portillons', parent: 'Billettique'},
     {label: 'Portes pallières', value: 'Porte pallières'},
     {label: 'PSDCU', value: 'PSDCU', parent: 'Porte pallières'},
+    {label: 'Téléphones', value: 'Téléphones'},
+    {label: 'Mitel', value: 'Mitel', parent: 'Téléphones'},
+    {label: "Téléphones d'urgences", value: "Téléphones d'urgences", parent: 'Téléphones'},
+    {label: 'BAU', value: 'BAU', parent: 'Téléphones'},
     {label: 'ATS', value: 'ATS'},
     {label: 'CCTV', value: 'CCTV'},
     {label: 'Archiveur', value: 'Archiveur', parent: 'CCTV'},
