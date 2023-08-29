@@ -43,7 +43,7 @@ interface Props {
   modalVisible: boolean;
   email: string;
   role: string;
-  departement: string;
+  department: string;
 }
 
 const UserModal: FunctionComponent<Props> = (props) => {
@@ -86,7 +86,7 @@ const UserModal: FunctionComponent<Props> = (props) => {
               Département : 
             </SmallText>
             <RegularText>
-              {getDepartmentOptions(props.departement)}
+              {getDepartmentOptions(props.department)}
             </RegularText>
             <SmallText>
               Rôle : 

@@ -9,8 +9,9 @@ export interface activity {
   creator: string;
   description: string;
   department: string;
-  employee: string;
+  employee: Array<{}>;
   site: string;
   system: string;
   activityType: string;
+  acquitHelp: Array<''>
 }

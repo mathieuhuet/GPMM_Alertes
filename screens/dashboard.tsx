@@ -64,7 +64,7 @@ const Dashboard: FunctionComponent = ({navigation}: any) => {
         profileIconBackgroundColor: result.data.profileIconBackgroundColor,
         _id: result.data._id,
         role: result.data.role,
-        departement: result.data.departement,
+        department: result.data.department,
         admin: result.data.admin
       }});
     }).catch((err) => {
@@ -75,18 +75,21 @@ const Dashboard: FunctionComponent = ({navigation}: any) => {
 
   useEffect(() => {
     const getActivities = async () => {
-      if (user.departement) {
+      if (user.department) {
         try {
-          const result = fetchActivitiesByDepartment(user.accessToken, {departement: user.departement}) as any;
+          const result = await fetchActivitiesByDepartment(user.accessToken, {department: user.department}) as any;
           setActivities(result.data);
-          setActivitiesStats(sortDataFromActivities(activities));
         } catch (err) {
           console.log(err, 'FETCHALLACTIVITIESDASHBOARD');
         }
       }
     }
     getActivities();
-  }, [user.departement, user.reload]);
+  }, [user.reload, user.firstName]);
+
+  useEffect(() => {
+    setActivitiesStats(sortDataFromActivities(activities));
+  }, [activities]);
 
   return (
     <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0}} >
@@ -109,11 +112,16 @@ const Dashboard: FunctionComponent = ({navigation}: any) => {
             <View
               style={{alignSelf: 'center', alignItems: 'flex-end'}}
             >
+              <RegularText
+                textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.02}}
+              >
+                Alertes en cours :
+              </RegularText>
               <View
                 style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
               >
                 <RegularText>
-                  Alerte Mineur : {activitiesStats.numberOfBlue}
+                  Alerte Mineure : {activitiesStats.numberOfBlue}
                 </RegularText>
                 <View style={{backgroundColor:colors.blue, width: 10, height: 10, borderRadius: 10, marginLeft: 8}}></View>
               </View>
@@ -121,7 +129,7 @@ const Dashboard: FunctionComponent = ({navigation}: any) => {
                 style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
               >
                 <RegularText>
-                  Alerte Important : {activitiesStats.numberOfYellow}
+                  Alerte Importante : {activitiesStats.numberOfYellow}
                 </RegularText>
                 <View style={{backgroundColor:colors.yellow, width: 10, height: 10, borderRadius: 10, marginLeft: 8}}></View>
               </View>
@@ -129,7 +137,7 @@ const Dashboard: FunctionComponent = ({navigation}: any) => {
                 style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
               >
                 <RegularText>
-                  Alerte Urgent : {activitiesStats.numberOfRed}
+                  Alerte Urgente : {activitiesStats.numberOfRed}
                 </RegularText>
                 <View style={{backgroundColor:colors.red, width: 10, height: 10, borderRadius: 10, marginLeft: 8}}></View>
               </View>

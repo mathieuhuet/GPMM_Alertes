@@ -17,8 +17,9 @@ import { ScreenHeight } from '../shared';
 const ModalPressableContainer = styled.Pressable`
   flex: 1;
   padding: 25px;
+  padding-top: 50px;
   background-color: rgba(0, 0, 0, 0.7);
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 `;
 

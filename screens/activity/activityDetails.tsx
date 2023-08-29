@@ -57,7 +57,7 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
 
   const deleteActivityPress = async () => {
     try {
-      const result = await deleteActivity({_id: activity._id}, user.accessToken) as any;
+      const result = await deleteActivity({_idActivity: activity._id, type: activity.type}, user.accessToken) as any;
       if (result.data) {
         closeDeleteModal();
         navigation.navigate('Dashboard');
@@ -74,7 +74,7 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
     setDeleteModalMessage("Voulez-vous vraiment supprimer l'activité?");
   }
 
-  
+  console.log(activity);
   return (
     <MainContainer style={{paddingTop: 0, paddingLeft: 0, paddingRight: 0, backgroundColor: colors.white, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}} >
       <View
@@ -176,29 +176,53 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
                   </RegularText>
                 </View>
               </View>
+              <View
+                style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}
+              >
+                <View>
+                  <SmallText>
+                    Emplacement
+                  </SmallText>
+                  <RegularText textStyle={{marginBottom: ScreenHeight * 0.01, color: colors.darkGreen, fontWeight: 'bold'}}>
+                    {activity.site}
+                  </RegularText>
+                </View>
+                <View>
+                  <SmallText>
+                    Activité céduler pour le
+                  </SmallText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
+                    >
+                      {new Date(activity.activityDate).toLocaleDateString()}   {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
+                  </RegularText>
+                </View>
+              </View>
               <SmallText>
                 Créé par
               </SmallText>
               <UserContainer
                 userId={activity.creator}
                 accessToken={user.accessToken}
-                style={{padding: ScreenHeight * 0.01}}
+                style={{paddingTop: ScreenHeight * 0.01, paddingLeft: ScreenHeight * 0.01}}
                 textStyle={{fontWeight: 'bold'}}
               />
-              <SmallText>
-                Emplacement
-              </SmallText>
-              <RegularText textStyle={{marginBottom: ScreenHeight * 0.01, color: colors.darkGreen, fontWeight: 'bold'}}>
-                {activity.site}
-              </RegularText>
-              <SmallText>
-                Activité céduler pour le
-              </SmallText>
-              <RegularText
-                textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
-                >
-                  {new Date(activity.activityDate).toLocaleDateString()}   {Platform.OS === 'ios' ? new Date(activity.activityDate).toLocaleTimeString().slice(0, -3) : new Date(activity.activityDate).toLocaleTimeString().slice(0, -9)}
-              </RegularText>
+              {activity.employee.length &&
+                <>
+                  <SmallText>
+                    Assigné à
+                  </SmallText>
+                  {activity.employee.map((id: any) =>
+                    <UserContainer
+                      userId={id}
+                      accessToken={user.accessToken}
+                      style={{paddingLeft: ScreenHeight * 0.01, paddingTop: ScreenHeight * 0.01}}
+                      textStyle={{fontWeight: 'bold'}}
+                      key={id}
+                    />
+                  )}
+                </>
+              }
               <SmallText>
                 Cette activité à été créé le
               </SmallText>
@@ -213,9 +237,108 @@ const ActivityDetails: FunctionComponent = ({navigation, route}: any) => {
           {focusTab === 'acquiter' && 
             <>
             {activity.acquit ?
-              <View>
-
-              </View>
+              <ScrollView
+                style={{marginTop: ScreenHeight * 0.02}}
+                contentContainerStyle={{paddingBottom: 400}}
+              >
+                <View
+                  style={{paddingLeft: 20, paddingRight: 20}}
+                > 
+                  <SmallText>
+                    Acquitté par
+                  </SmallText>
+                  <UserContainer
+                    userId={activity.creator}
+                    accessToken={user.accessToken}
+                    style={{paddingTop: ScreenHeight * 0.01, paddingLeft: ScreenHeight * 0.01}}
+                    textStyle={{fontWeight: 'bold'}}
+                  />
+                  <SmallText>
+                    Acquitté le
+                  </SmallText>
+                  <RegularText
+                    textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
+                    >
+                      {new Date(activity.acquitDate).toLocaleDateString()}   {Platform.OS === 'ios' ? new Date(activity.acquitDate).toLocaleTimeString().slice(0, -3) : new Date(activity.acquitDate).toLocaleTimeString().slice(0, -9)}
+                  </RegularText>
+                  {activity.acquitHelp.length > 0 &&
+                  <>
+                    <SmallText>
+                      Avec l'aide de 
+                    </SmallText>
+                    {activity.acquitHelp.map((id: any) =>
+                      <UserContainer
+                        userId={id}
+                        accessToken={user.accessToken}
+                        style={{paddingLeft: ScreenHeight * 0.01, paddingTop: ScreenHeight * 0.01}}
+                        textStyle={{fontWeight: 'bold'}}
+                        key={id}
+                      />
+                    )}
+                  </>
+                  }
+                  {activity.acquitComments &&
+                  <>
+                    <SmallText>
+                      Commentaires : 
+                    </SmallText>
+                    <RegularText
+                      textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
+                    >
+                      {activity.acquitComments}
+                    </RegularText>
+                  </>
+                  }
+                  {activity.acquitEquipment &&
+                  <>
+                    <SmallText>
+                      Équipements : 
+                    </SmallText>
+                    <RegularText
+                      textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
+                    >
+                      {activity.acquitEquipment}
+                    </RegularText>
+                  </>
+                  }
+                  {activity.acquitDescription &&
+                  <>
+                    <SmallText>
+                      Description : 
+                    </SmallText>
+                    <RegularText
+                      textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
+                    >
+                      {activity.acquitDescription}
+                    </RegularText>
+                  </>
+                  }
+                  {activity.acquitResult &&
+                  <>
+                    <SmallText>
+                      Résultat : 
+                    </SmallText>
+                    <RegularText
+                      textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
+                    >
+                      {activity.acquitResult}
+                    </RegularText>
+                  </>
+                  }
+                  {activity.acquitObservation &&
+                  <>
+                    <SmallText>
+                      Observations : 
+                    </SmallText>
+                    <RegularText
+                      textStyle={{fontWeight: 'bold', marginBottom: ScreenHeight * 0.01, color: colors.darkGreen}}
+                    >
+                      {activity.acquitObservation}
+                    </RegularText>
+                  </>
+                  }
+                </View>
+              </ScrollView>
             : 
               <View>
                 {activity.type === 'intervention' && 

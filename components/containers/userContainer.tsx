@@ -33,7 +33,7 @@ const UserContainer: FunctionComponent<Props> = (props) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('');
-  const [departement, setDepartement] = useState('');
+  const [department, setDepartment] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   //fetch comments
@@ -47,7 +47,7 @@ const UserContainer: FunctionComponent<Props> = (props) => {
         setPoliceColor(result.data.profileIconColor);
         setEmail(result.data.email);
         setRole(result.data.role);
-        setDepartement(result.data.departement);
+        setDepartment(result.data.department);
         setIsLoaded(true);
       } catch (error) {
         console.log(error);
@@ -94,7 +94,7 @@ const UserContainer: FunctionComponent<Props> = (props) => {
           email={email}
           modalVisible={modalVisible}
           role={role}
-          departement={departement}
+          department={department}
           buttonHandler={() => setModalVisible(false)}
         />
       </View>

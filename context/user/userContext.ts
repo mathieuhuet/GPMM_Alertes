@@ -9,7 +9,7 @@ export const UserContext = createContext({
   _id: '',
   accessToken: '',
   role: '',
-  departement: '',
+  department: '',
   reload: 0,
   admin: false
 });
@@ -22,7 +22,7 @@ export const UserDispatchContext = createContext({
   _id: '',
   accessToken: '',
   role: '',
-  departement: '',
+  department: '',
   reload: 0,
   admin: false
 });

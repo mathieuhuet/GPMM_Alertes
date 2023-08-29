@@ -6,6 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { postActivity } from '../services/activityServices/postActivity';
 import { UserContext, UserDispatchContext } from '../context/user/userContext';
 import { fetchUsersByDepartment } from '../services/userServices/fetchUsersByDepartment';
+import { sortEmployeDepartment } from '../utils/sortEmployeDepartment';
 
 // Custom components
 import MainContainer from '../components/containers/mainContainer';
@@ -152,9 +153,8 @@ const Create: FunctionComponent = ({ navigation }: any) => {
     const getEmploye = async () => {
       if (valueDep) {
         try {
-          const result = await fetchUsersByDepartment({departement: valueDep}, user.accessToken) as any;
+          const result = await fetchUsersByDepartment({department: valueDep}, user.accessToken) as any;
           setEmploye(result.data);
-          console.log(employe);
         } catch (error) {
           console.log(error);
         }
@@ -162,6 +162,12 @@ const Create: FunctionComponent = ({ navigation }: any) => {
     }
     getEmploye();
   }, [valueDep])
+
+  useEffect(() => {
+    if (employe) {
+      setItemsEmp(sortEmployeDepartment(employe, user._id));
+    }
+  }, [employe])
 
   return (
     <MainContainer

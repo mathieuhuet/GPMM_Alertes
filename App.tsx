@@ -44,7 +44,7 @@ const App: FunctionComponent = () => {
             profileIconBackgroundColor: result.data.profileIconBackgroundColor,
             _id: result.data._id,
             role: result.data.role,
-            departement: result.data.departement,
+            department: result.data.department,
             admin: result.data.admin
           }});
         }).catch((err) => {

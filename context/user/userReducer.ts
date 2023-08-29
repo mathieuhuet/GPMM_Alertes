@@ -7,7 +7,7 @@ export const initialUser = {
   _id: '',
   accessToken: '',
   role: '',
-  departement: '',
+  department: '',
   reload: 0,
   admin: false
 }
@@ -57,7 +57,7 @@ export const userReducer = (user: any, action: any) => {
         email: action.payload.email,
         _id: action.payload._id,
         role: action.payload.role,
-        departement: action.payload.departement,
+        department: action.payload.department,
         admin: action.payload.admin
       }
     }
