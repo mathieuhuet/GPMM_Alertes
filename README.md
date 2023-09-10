@@ -17,3 +17,14 @@ The front-end framework is **React Native** and wouldn't been possible without *
 The back-end server is **Express.JS**
 
 The database is **Mongo DB**
+
+
+## Screenshots
+
+![](assets/GPMM_Android_003)
+
+![](assets/GPMM_Android_001)
+
+![](assets/GPMM_001)
+
+![](assets/GPMM_007)
