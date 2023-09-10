@@ -12,7 +12,7 @@ To install the required dependencies, you're gonna run `npm install` at the root
 
 afterward your run `npx expo install` and then to run the app you enter the command `npx expo start`
 
-This app can't work properly if you're not running [the GPMM_Alertes_server](https://github.com/mathieuhuet/GPMM_Alertes_server) and pointing the App to the IP of [the GPMM_Alertes_server](https://github.com/mathieuhuet/GPMM_Alertes_server).
+This app can't work properly if you're not running [the GPMM_Alertes_server](https://github.com/mathieuhuet/GPMM_Alertes_server), don't forget to point the App toward [the GPMM_Alertes_server](https://github.com/mathieuhuet/GPMM_Alertes_server) IP and port.
 
 ## Tech Stack
 
